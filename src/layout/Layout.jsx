@@ -9,7 +9,7 @@ const Layout = () => {
         <div>
             <Header/>
         </div>
-        <div>
+        <div className='h-[calc(100vh-74px)]'>
             <Outlet/>
         </div>
         <div>
