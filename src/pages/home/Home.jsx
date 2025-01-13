@@ -1,9 +1,236 @@
-import React from 'react'
-
+import React from "react";
+import { FaMedkit } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdWorkHistory } from "react-icons/md";
+import { IoBusiness } from "react-icons/io5";
+import { SiMarketo } from "react-icons/si";
+import { AiFillProject } from "react-icons/ai";
+import { RiCustomerServiceFill } from "react-icons/ri";
+import { GrCloudSoftware } from "react-icons/gr";
+import { TiTick } from "react-icons/ti";
+import { FaHandsHoldingCircle } from "react-icons/fa6";
+import { useState, useMemo } from "react";
+import countryList from "react-select-country-list";
+import { IconContext } from "react-icons";
 const Home = () => {
+  const [value, setValue] = useState("");
+  const options = useMemo(() => countryList().getData(), []);
+  const countries = options.flat();
+  const changeHandler = (value) => {
+    setValue(value);
+  };
   return (
-    <div>Home</div>
-  )
-}
+    <div className="">
+      {/* hero section */}
+      <section className="w-full relative bg-[#0596690d] py-20 px-4">
+        <div className="md:max-w-[500px] xl:max-w-[768px] mx-auto flex flex-col justify-center items-center gap-4 text-center">
+          <h4 className="lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 font-bold">
+            Join us &{" "}
+            <span className="text-emerald-600 font-bold">
+              Explore Thousands
+            </span>{" "}
+            of Ideas
+          </h4>
+          <p className="text-slate-400 text-lg max-w-xl mx-auto">
+            Find Jobs, Employment &amp; Career Opportunities. Some of the
+            companies we've helped recruit excellent applicants over the years.
+          </p>
+          <div className="w-full flex max-xl:flex-col items-center justify-center gap-y-2 bg-white rounded-lg shadow p-2 ">
+            <div className="relative w-full ">
+              <input
+                type="text"
+                placeholder="Search Your Keywords"
+                className="w-full h-[60px] text-[15px] rounded-md ps-10 pe-2 outline-none bg-gray-50"
+              />
+              <div className="absolute top-[20px] left-2">
+                <IconContext.Provider
+                  value={{ color: "#059669", size: "20px" }}
+                >
+                  <FaMedkit />
+                </IconContext.Provider>
+              </div>
+            </div>
+            <div className="relative w-full">
+              <select
+                name=""
+                id=""
+                className="w-full h-[60px] text-[15px] rounded-md ps-10 pe-2 outline-none bg-gray-50"
+              >
+                {countries.map((item, index) => (
+                  <option key={index} value={value} onChange={changeHandler}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute top-5 left-2">
+                <IconContext.Provider
+                  value={{ color: "#059669", size: "20px" }}
+                >
+                  <FaLocationDot />
+                </IconContext.Provider>
+              </div>
+            </div>
+            <div className="relative w-full">
+              <select
+                name=""
+                id=""
+                className="w-full h-[60px] text-[15px] rounded-md ps-10 pe-6 outline-none bg-gray-50"
+              >
+                <option value="" disabled>
+                  Select...
+                </option>
+                <option value="">Full-time</option>
+                <option value="">Part Time</option>
+                <option value="">Internship</option>
+              </select>
+              <div className="absolute top-4 left-2">
+                <IconContext.Provider
+                  value={{ color: "#059669", size: "20px" }}
+                >
+                  <MdWorkHistory />
+                </IconContext.Provider>
+              </div>
+            </div>
+            <button className="bg-emerald-600 w-full rounded-md py-4 text-center text-white">
+              Submit
+            </button>
+          </div>
+          <div className="mt-4">
+            <span className="text-slate-400">
+              <span className="text-black">Popular Searches :</span> Designer,
+              Developer, Web, IOS, PHP Senior Engineer
+            </span>
+          </div>
+        </div>
+      </section>
+      {/* popular categories section */}
+      <section className="w-full py-16 px-2">
+        <div className="container flex flex-col gap-y-6 items-center text-center">
+          <div className="flex flex-col">
+            <h3 className="text-2xl mb-4 font-semibold">Popular Categories</h3>
+            <p className="text-slate-400 max-w-xl">
+              Search all the open positions on the web. Get your own
+              personalized salary estimate. Read reviews on over 30000+
+              companies worldwide.
+            </p>
+          </div>
+          <div className="flex justify-center max-md:flex-col md:flex-wrap gap-4 w-full md:*:w-[30vh]">
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
+                <IoBusiness />
+              </div>
+              <span className="text-[17px] font-semibold">
+                Business Development
+              </span>
+              <span className="text-slate-400 mt-3">74 ideas</span>
+            </div>
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
+                <SiMarketo />
+              </div>
+              <span className="text-[17px] font-semibold">
+                Marketing & Communication
+              </span>
+              <span className="text-slate-400 mt-3">23 ideas</span>
+            </div>
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
+                <AiFillProject />
+              </div>
+              <span className="text-[17px] font-semibold">
+                Project Management
+              </span>
+              <span className="text-slate-400 mt-3">76 ideas</span>
+            </div>
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
+                <RiCustomerServiceFill />
+              </div>
+              <span className="text-[17px] font-semibold">
+                Customer Service
+              </span>
+              <span className="text-slate-400 mt-3">34 ideas</span>
+            </div>
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
+                <GrCloudSoftware />
+              </div>
+              <span className="text-[17px] font-semibold">
+                Software Engineering
+              </span>
+              <span className="text-slate-400 mt-3">54 ideas</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* conatct hero page */}
+      <section className="w-full py-16 px-2">
+        <div className="container flex max-md:flex-col gap-2 items-center">
+          <div className="w-full md:w-1/2">
+            <img src="src\assets\home\contact-ideas.png" alt="contact-ideas" />
+          </div>
+          <div className="flex flex-col items-start gap-y-4">
+            <h3 className="mb-6 md:text-[26px] text-2xl md:leading-normal leading-normal font-semibold">
+              Millions of ideas. <br /> Find the one that's right for you.
+            </h3>
+            <p className="text-slate-400 max-w-xl">
+              Search all the open positions on the web. Get your own
+              personalized salary estimate. Read reviews on over 30000+
+              companies worldwide.
+            </p>
+            <ul className="flex flex-col items-start gap-y-1">
+              <li className="flex items-center gap-x-2">
+                <div className="text-emerald-600 border border-solid border-emerald-600 p-[2px] rounded-full">
+                  <TiTick />
+                </div>
+                <span className="text-slate-400">
+                  Digital Marketing Solutions for Tomorrow
+                </span>
+              </li>
+              <li className="flex items-center gap-x-2">
+                <div className="text-emerald-600 border border-solid border-emerald-600 p-[2px] rounded-full">
+                  <TiTick />
+                </div>
+                <span className="text-slate-400">
+                  {" "}
+                  Our Talented & Experienced Marketing Agency
+                </span>
+              </li>
+              <li className="flex items-center gap-x-2">
+                <div className="text-emerald-600 border border-solid border-emerald-600 p-[2px] rounded-full">
+                  <TiTick />
+                </div>
+                <span className="text-slate-400">
+                  {" "}
+                  Create your own skin to match your brand
+                </span>
+              </li>
+            </ul>
+            <button className="flex items-center gap-x-2 bg-emerald-600 text-white text-sm font-medium rounded-md py-2 px-4">
+              <div>
+                <FaHandsHoldingCircle />
+              </div>
+              <span>Contact us</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      {/* popular ideas */}
+      <section className="w-full py-16 px-2">
+        <div className="container flex flex-col gap-y-6 items-center text-center">
+          <div className="flex flex-col">
+            <h3 className="text-2xl mb-4 font-semibold">Popular Ideas</h3>
+            <p className="text-slate-400 max-w-xl">
+              Search all the open positions on the web. Get your own
+              personalized salary estimate. Read reviews on over 30000+
+              companies worldwide.
+            </p>
+          </div>
+          <div className=""></div>
+        </div>
+      </section>
+    </div>
+  );
+};
 
-export default Home
+export default Home;

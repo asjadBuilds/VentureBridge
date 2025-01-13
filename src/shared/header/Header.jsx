@@ -19,7 +19,8 @@ const Header = () => {
     }
   };
   return (
-    <div className="w-full bg-white shadow fixed top-0 mx-auto">
+    <section className="min-h-[74px] bg-white">
+    <div className="w-full bg-white shadow fixed top-0 mx-auto z-10">
       <div
         className={`flex justify-between items-center p-2 container mx-auto md:min-h-[74px] ${
           mobileDropdown ? "shadow" : ""
@@ -44,7 +45,7 @@ const Header = () => {
             <li className="relative">
               <div className={`flex items-center gap-x-1 ${dropdownId === "sub-1" ? "text-green-500" : ""}`} onClick={()=>toggleDropdownById('sub-1')}>
                 <span>Dropdown 1</span>
-                <i class="fa-solid fa-chevron-down"></i>
+                <i className="fa-solid fa-chevron-down"></i>
               </div>
               <ul className={`absolute top-[60px] shadow bg-white rounded flex-col items-center min-w-[180px] ${dropdownId === 'sub-1' ? 'flex':'hidden'}`}>
                 <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">Sub-item 1</li>
@@ -70,16 +71,16 @@ const Header = () => {
             {userDropdown ? (
               <div className="flex flex-col items-start absolute top-full right-1/2 shadow-md bg-white rounded-md overflow-hidden w-44">
                 <div className="flex items-center gap-x-3 py-2 px-4 text-sm">
-                  <i class="fa-regular fa-user"></i>
+                  <i className="fa-regular fa-user"></i>
                   <span>Profile</span>
                 </div>
                 <div className="flex items-center gap-x-3 py-2 px-4 text-sm">
-                  <i class="fa-solid fa-gears"></i>
+                  <i className="fa-solid fa-gears"></i>
                   <span>Settings</span>
                 </div>
                 <div className="h-[0.5px] w-full bg-neutral-200"></div>
                 <div className="flex items-center gap-x-3 py-2 px-4 text-sm">
-                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  <i className="fa-solid fa-arrow-right-from-bracket"></i>
                   <span>Logout</span>
                 </div>
               </div>
@@ -107,7 +108,7 @@ const Header = () => {
         >
           <span>Dropdown 1</span>
           <div>
-            <i class="fa-solid fa-chevron-down"></i>
+            <i className="fa-solid fa-chevron-down"></i>
           </div>
         </li>
         <ul
@@ -127,7 +128,7 @@ const Header = () => {
         >
           <span>Dropdown 2</span>
           <div>
-            <i class="fa-solid fa-chevron-down"></i>
+            <i className="fa-solid fa-chevron-down"></i>
           </div>
         </li>
         <ul
@@ -147,7 +148,7 @@ const Header = () => {
         >
           <span>Dropdown 3</span>
           <div>
-            <i class="fa-solid fa-chevron-down"></i>
+            <i className="fa-solid fa-chevron-down"></i>
           </div>
         </li>
         <ul
@@ -161,6 +162,7 @@ const Header = () => {
         </ul>
       </ul>
     </div>
+    </section>
   );
 };
 
