@@ -9,6 +9,7 @@ import { RiCustomerServiceFill } from "react-icons/ri";
 import { GrCloudSoftware } from "react-icons/gr";
 import { TiTick } from "react-icons/ti";
 import { FaHandsHoldingCircle } from "react-icons/fa6";
+import { MdOutlineChevronRight } from "react-icons/md";
 import { useState, useMemo } from "react";
 import countryList from "react-select-country-list";
 import { IconContext } from "react-icons";
@@ -115,7 +116,7 @@ const Home = () => {
             </p>
           </div>
           <div className="flex justify-center max-md:flex-col md:flex-wrap gap-4 w-full md:*:w-[30vh]">
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white hover:bg-emerald-600/5 rounded-md text-center shadow group">
               <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
                 <IoBusiness />
               </div>
@@ -124,7 +125,7 @@ const Home = () => {
               </span>
               <span className="text-slate-400 mt-3">74 ideas</span>
             </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
               <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
                 <SiMarketo />
               </div>
@@ -133,7 +134,7 @@ const Home = () => {
               </span>
               <span className="text-slate-400 mt-3">23 ideas</span>
             </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
               <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
                 <AiFillProject />
               </div>
@@ -142,7 +143,7 @@ const Home = () => {
               </span>
               <span className="text-slate-400 mt-3">76 ideas</span>
             </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
               <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
                 <RiCustomerServiceFill />
               </div>
@@ -151,7 +152,7 @@ const Home = () => {
               </span>
               <span className="text-slate-400 mt-3">34 ideas</span>
             </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow">
+            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
               <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
                 <GrCloudSoftware />
               </div>
@@ -226,7 +227,113 @@ const Home = () => {
               companies worldwide.
             </p>
           </div>
-          <div className=""></div>
+          <div className="flex justify-center md:justify-start max-md:flex-col md:flex-wrap gap-4 md:gap-6 w-full">
+            <div className="flex flex-col md:w-[25vw] overflow-hidden rounded-md shadow gap-y-4">
+              <div className="w-full h-[150px] overflow-hidden">
+                <img
+                  src="src\assets\home\mobile-repair-idea.png"
+                  alt=""
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              <div className="flex flex-col items-start gap-y-2 px-4 py-2">
+                <h3 className="text-[15px] font-semibold">Mobile Repair Business Idea</h3>
+                <span className="text-xs font-medium uppercase text-slate-400">
+                  Starting from: <span className="text-sm font-semibold text-black"> $150000</span>
+                </span>
+                <button className="flex items-center gap-x-2 bg-emerald-600 text-white text-xs font-medium rounded-md py-2 px-4">
+                  <span>See Details</span>
+                  <div className="text-base">
+                  <MdOutlineChevronRight />
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col md:w-[25vw] overflow-hidden rounded-md shadow gap-y-4">
+              <div className="w-full h-[150px] overflow-hidden">
+                <img
+                  src="src\assets\home\food-delivery-idea.jpg"
+                  alt=""
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              <div className="flex flex-col items-start gap-y-2 px-4 py-2">
+                <h3 className="text-[15px] font-semibold">Food Delivery Business Idea</h3>
+                <span className="text-xs font-medium uppercase text-slate-400">
+                  Starting from: <span className="text-sm font-semibold text-black"> $250000</span>
+                </span>
+                <button className="flex items-center gap-x-2 bg-emerald-600 text-white text-xs font-medium rounded-md py-2 px-4">
+                  <span>See Details</span>
+                  <div className="text-base">
+                  <MdOutlineChevronRight />
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col md:w-[25vw] overflow-hidden rounded-md shadow gap-y-4">
+              <div className="w-full h-[150px] overflow-hidden">
+                <img
+                  src="src\assets\home\construction-idea.jpg"
+                  alt=""
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              <div className="flex flex-col items-start gap-y-2 px-4 py-2">
+                <h3 className="text-[15px] font-semibold">Construction Business Idea</h3>
+                <span className="text-xs font-medium uppercase text-slate-400">
+                  Starting from: <span className="text-sm font-semibold text-black"> $650000</span>
+                </span>
+                <button className="flex items-center gap-x-2 bg-emerald-600 text-white text-xs font-medium rounded-md py-2 px-4">
+                  <span>See Details</span>
+                  <div className="text-base">
+                  <MdOutlineChevronRight />
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col md:w-[25vw] overflow-hidden rounded-md shadow gap-y-4">
+              <div className="w-full h-[150px] overflow-hidden">
+                <img
+                  src="src\assets\home\busniness-analyst-idea.jpg"
+                  alt=""
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              <div className="flex flex-col items-start gap-y-2 px-4 py-2">
+                <h3 className="text-[15px] font-semibold"> Business Analysis Idea</h3>
+                <span className="text-xs font-medium uppercase text-slate-400">
+                  Starting from: <span className="text-sm font-semibold text-black"> $1200</span>
+                </span>
+                <button className="flex items-center gap-x-2 bg-emerald-600 text-white text-xs font-medium rounded-md py-2 px-4">
+                  <span>See Details</span>
+                  <div className="text-base">
+                  <MdOutlineChevronRight />
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col md:w-[25vw] overflow-hidden rounded-md shadow gap-y-4">
+              <div className="w-full h-[150px] overflow-hidden">
+                <img
+                  src="src\assets\home\business-consultation-idea.jpg"
+                  alt=""
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              <div className="flex flex-col items-start gap-y-2 px-4 py-2">
+                <h3 className="text-[15px] font-semibold">Business Consultation Idea</h3>
+                <span className="text-xs font-medium uppercase text-slate-400">
+                  Starting from: <span className="text-sm font-semibold text-black"> $17000</span>
+                </span>
+                <button className="flex items-center gap-x-2 bg-emerald-600 text-white text-xs font-medium rounded-md py-2 px-4">
+                  <span>See Details</span>
+                  <div className="text-base">
+                  <MdOutlineChevronRight />
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

@@ -42,12 +42,12 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-x-3 ">
           <ul className="flex items-center gap-x-2 max-[992px]:hidden">
-            <li className="relative">
+            <li className="relative group cursor-pointer">
               <div className={`flex items-center gap-x-1 ${dropdownId === "sub-1" ? "text-green-500" : ""}`} onClick={()=>toggleDropdownById('sub-1')}>
                 <span>Dropdown 1</span>
                 <i className="fa-solid fa-chevron-down"></i>
               </div>
-              <ul className={`absolute top-[60px] shadow bg-white rounded flex-col items-center min-w-[180px] ${dropdownId === 'sub-1' ? 'flex':'hidden'}`}>
+              <ul className={`absolute top-[60px] shadow bg-white rounded flex flex-col items-center min-w-[180px] opacity-0 group-hover:opacity-100 transition-all duration-200`}>
                 <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">Sub-item 1</li>
                 <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">Sub-item 2</li>
                 <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">Sub-item 3</li>
