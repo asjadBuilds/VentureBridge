@@ -21,7 +21,7 @@ const Home = () => {
     setValue(value);
   };
   return (
-    <div className="">
+    <div>
       {/* hero section */}
       <section className="w-full relative bg-[#0596690d] py-20 px-4">
         <div className="md:max-w-[500px] xl:max-w-[768px] mx-auto flex flex-col justify-center items-center gap-4 text-center">
