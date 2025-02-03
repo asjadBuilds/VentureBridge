@@ -3,3 +3,7 @@
         display: none;
     }
 }
+.dropdown-item:hover > .dropdown-menu{
+    opacity: 1;
+    visibility: visible;
+}

@@ -1,10 +1,42 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import "../header/header.css";
+import useDeviceWidth from "../../hooks/useDeviceWidth";
 const Header = () => {
   const [userDropdown, setUserDropdown] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(false);
   const [dropdownId, setDropdownId] = useState("");
+  const [windowScroll, setWindowScroll] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
+  const location = useLocation();
+  const width = useDeviceWidth();
+  const [isHomeRoute, setIsHomeRoute] = useState(false);
+  useEffect(() => {
+    if(location.pathname==='/'){
+      setIsHomeRoute(true);
+    } else{
+      setIsHomeRoute(false)
+    }
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setWindowScroll(true);
+      } else {
+        setWindowScroll(false);
+      }
+    };
+
+    if (width > 768) {
+      setIsDesktop(true);
+    } else {
+      setIsDesktop(false);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [width, location.pathname]);
   const handleuserDropdown = () => {
     setUserDropdown(!userDropdown);
   };
@@ -19,8 +51,11 @@ const Header = () => {
     }
   };
   return (
-    <section className="min-h-[74px] bg-white">
-    <div className="w-full bg-white shadow fixed top-0 mx-auto z-10">
+    <div
+      className={`w-full shadow fixed top-0 mx-auto z-10 transition-all duration-200 bg-white ${
+        !windowScroll && isDesktop ? "bg-opacity-0 shadow-none" : "bg-white"
+      }`}
+    >
       <div
         className={`flex justify-between items-center p-2 container mx-auto md:min-h-[74px] ${
           mobileDropdown ? "shadow" : ""
@@ -33,24 +68,46 @@ const Header = () => {
               alt="main-logo"
               className="md:hidden"
             />
+            {isHomeRoute ? 
             <img
-              src="src\assets\full-logo.png"
-              alt="full-main-logo"
-              className="max-md:hidden"
-            />
+            src="src\assets\full-logo.png"
+            alt="full-main-logo"
+            className="max-md:hidden"
+          /> : !isHomeRoute && !windowScroll ? <img
+          src="src/assets/full-logo-white.png"
+          alt="white-main-logo"
+          className="max-md:hidden"
+        /> : !isHomeRoute && windowScroll ? <img
+        src="src\assets\full-logo.png"
+        alt="full-main-logo"
+        className="max-md:hidden"
+      /> : <></> }
+        
           </Link>
         </div>
         <div className="flex items-center gap-x-3 ">
           <ul className="flex items-center gap-x-2 max-[992px]:hidden">
-            <li className="relative group cursor-pointer">
-              <div className={`flex items-center gap-x-1 ${dropdownId === "sub-1" ? "text-green-500" : ""}`} onClick={()=>toggleDropdownById('sub-1')}>
+            <li className="relative cursor-pointer dropdown-item block">
+              <div
+                className={`flex items-center gap-x-1 ${
+                  !windowScroll && !isHomeRoute ? "text-white" : ""
+                }`}
+              >
                 <span>Dropdown 1</span>
                 <i className="fa-solid fa-chevron-down"></i>
               </div>
-              <ul className={`absolute top-[60px] shadow bg-white rounded flex flex-col items-center min-w-[180px] opacity-0 group-hover:opacity-100 transition-all duration-200`}>
-                <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">Sub-item 1</li>
-                <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">Sub-item 2</li>
-                <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">Sub-item 3</li>
+              <ul
+                className={`dropdown-menu absolute top-[60px] shadow bg-white rounded flex flex-col items-center min-w-[180px] transition-all duration-200 opacity-0 invisible`}
+              >
+                <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">
+                  Sub-item 1
+                </li>
+                <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">
+                  Sub-item 2
+                </li>
+                <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">
+                  Sub-item 3
+                </li>
               </ul>
             </li>
           </ul>
@@ -58,15 +115,15 @@ const Header = () => {
             <input
               type="text"
               placeholder="Search..."
-              className="border-none outline-none text-sm w-36"
+              className={`border-none outline-none text-sm w-36 ${!windowScroll && !isHomeRoute ?'bg-transparent':''}`}
             />
             <div className="absolute top-1 right-2">
-              <i className="fa-solid fa-magnifying-glass"></i>
+              <i className={`fa-solid fa-magnifying-glass ${!windowScroll && !isHomeRoute ? 'text-white':''}`}></i>
             </div>
           </div>
           <div className="relative">
             <div onClick={handleuserDropdown}>
-              <i className="fa-solid fa-circle-user text-lg"></i>
+              <i className={`fa-solid fa-circle-user text-lg ${!windowScroll && !isHomeRoute ? 'text-white':''}`}></i>
             </div>
             {userDropdown ? (
               <div className="flex flex-col items-start absolute top-full right-1/2 shadow-md bg-white rounded-md overflow-hidden w-44">
@@ -162,7 +219,6 @@ const Header = () => {
         </ul>
       </ul>
     </div>
-    </section>
   );
 };
 
