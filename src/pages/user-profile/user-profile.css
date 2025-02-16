@@ -1,0 +1,3 @@
+.btn-shadow{
+    box-shadow: 0 .125rem .375rem 0 rgba(var(--bs-primary-rgb), 0)
+}

@@ -1,11 +1,14 @@
 import AppRouter from "./routes/AppRouter"
-
+import '@mantine/core/styles.css';
+import { MantineProvider } from '@mantine/core';
 
 function App() {
  
 
   return (
-    <AppRouter/>
+    <MantineProvider>
+      <AppRouter/>
+    </MantineProvider>
   )
 }
 
