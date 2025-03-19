@@ -1,5 +1,5 @@
 import React from "react";
-import '../sign-up/sign-up.css'
+import './sign-up.css'
 const SignUp = () => {
   return (
     <div className="w-screen h-screen bg-[#57D38C] flex justify-center items-center">
