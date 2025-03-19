@@ -7,6 +7,7 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { FaUserCog } from "react-icons/fa";
 import { CiMoneyBill } from "react-icons/ci";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { Input } from '@mantine/core';
 import Ripples from 'react-ripples';
 const UserProfile = () => {
   return (
@@ -67,7 +68,7 @@ const UserProfile = () => {
         </Ripples>
       </div>
       <div className='mt-4'>
-        
+        Under Construction
       </div>
     </div>
   )
