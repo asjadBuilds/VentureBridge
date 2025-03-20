@@ -6,7 +6,8 @@ import IdeasListing from "../pages/ideas-listing/IdeasListing";
 import ProductDetail from "../pages/product-detail/ProductDetail";
 import UserProfile from "../pages/user-profile/UserProfile";
 import UserDashboard from "../pages/user-dashboard/UserDashboard";
-import SignUp from "../pages/sign-up/SignUp";
+import SignUp from "../pages/signup/SignUp";
+import Login from "../pages/login/Login";
 
 const AppRouter = () => {
     const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const AppRouter = () => {
             path:'sign-up',
             element:<SignUp/>
         },
+        {
+            path:'login',
+            element:<Login/>
+        }
     ])
   return <RouterProvider router={router}/>
 };
