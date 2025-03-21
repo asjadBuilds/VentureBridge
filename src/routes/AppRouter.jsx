@@ -8,6 +8,7 @@ import UserProfile from "../pages/user-profile/UserProfile";
 import UserDashboard from "../pages/user-dashboard/UserDashboard";
 import SignUp from "../pages/signup/SignUp";
 import Login from "../pages/login/Login";
+import AddProduct from "../pages/add-new-product/AddProduct";
 
 const AppRouter = () => {
     const router = createBrowserRouter([
@@ -20,13 +21,17 @@ const AppRouter = () => {
                     element:<Home/>
                 },
                 {
-                    path:'ideas-listing',
+                    path:'ideasListing/:categoryId',
                     element:<IdeasListing/>
                 },
                 {
-                    path:'product-detail',
+                    path:'productDetail',
                     element:<ProductDetail/>
                 },
+                {
+                    path:'addProduct',
+                    element:<AddProduct/>
+                }
             ],
         },
         {
@@ -40,7 +45,7 @@ const AppRouter = () => {
             ]
         },
         {
-            path:'sign-up',
+            path:'signup',
             element:<SignUp/>
         },
         {

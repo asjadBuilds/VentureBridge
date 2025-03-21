@@ -1,25 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaMedkit } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdWorkHistory } from "react-icons/md";
-import { IoBusiness } from "react-icons/io5";
-import { SiMarketo } from "react-icons/si";
-import { AiFillProject } from "react-icons/ai";
-import { RiCustomerServiceFill } from "react-icons/ri";
-import { GrCloudSoftware } from "react-icons/gr";
 import { TiTick } from "react-icons/ti";
 import { FaHandsHoldingCircle } from "react-icons/fa6";
 import { MdOutlineChevronRight } from "react-icons/md";
 import { useState, useMemo } from "react";
 import countryList from "react-select-country-list";
 import { IconContext } from "react-icons";
+import './home.css'
+import axios from "axios";
+import { CONFIG } from "../../../config";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [value, setValue] = useState("");
   const options = useMemo(() => countryList().getData(), []);
+  const [categories, setCategories] = useState([])
+  const naviagte = useNavigate()
   const countries = options.flat();
   const changeHandler = (value) => {
     setValue(value);
   };
+  useEffect(()=>{
+    getAllCategories()
+  },[])
+  const getAllCategories = async()=>{
+    try {
+      const {data} = await axios.get(CONFIG.getAllCategories)
+      console.log(data)
+      if(data.success){
+        setCategories(data?.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleCategorySelect = (categoryId)=>{
+    naviagte(`ideasListing/${categoryId}`)
+  }
   return (
     <div>
       {/* hero section */}
@@ -116,51 +134,17 @@ const Home = () => {
             </p>
           </div>
           <div className="flex justify-center max-md:flex-col md:flex-wrap gap-4 w-full md:*:w-[30vh]">
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white hover:bg-emerald-600/5 rounded-md text-center shadow group">
-              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
-                <IoBusiness />
+            {categories.map((category)=>(
+              <div id={category._id} key={category._id} className="cursor-pointer flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white hover:bg-emerald-600/5 rounded-md text-center shadow group transition duration-200" onClick={()=>handleCategorySelect(category._id)}>
+              <div className="size-16 bg-emerald-600/5 text-emerald-600 rounded-md text-2xl flex align-middle justify-center items-center shadow-sm  mx-auto">
+                <img src={category?.categoryIcon} alt={category?.title} />
               </div>
               <span className="text-[17px] font-semibold">
-                Business Development
+                {category?.title}
               </span>
-              <span className="text-slate-400 mt-3">74 ideas</span>
+              <span className="text-slate-400 mt-3">{category?.productCount} ideas</span>
             </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
-              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
-                <SiMarketo />
-              </div>
-              <span className="text-[17px] font-semibold">
-                Marketing & Communication
-              </span>
-              <span className="text-slate-400 mt-3">23 ideas</span>
-            </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
-              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
-                <AiFillProject />
-              </div>
-              <span className="text-[17px] font-semibold">
-                Project Management
-              </span>
-              <span className="text-slate-400 mt-3">76 ideas</span>
-            </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
-              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
-                <RiCustomerServiceFill />
-              </div>
-              <span className="text-[17px] font-semibold">
-                Customer Service
-              </span>
-              <span className="text-slate-400 mt-3">34 ideas</span>
-            </div>
-            <div className=" flex flex-col gap-y-2 items-center justify-center py-10 px-3 bg-white rounded-md text-center shadow hover:bg-emerald-600/5 group">
-              <div className="size-16 bg-emerald-600/5 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white rounded-md text-2xl flex align-middle justify-center items-center shadow-sm transition duration-500 mx-auto">
-                <GrCloudSoftware />
-              </div>
-              <span className="text-[17px] font-semibold">
-                Software Engineering
-              </span>
-              <span className="text-slate-400 mt-3">54 ideas</span>
-            </div>
+            ))}
           </div>
         </div>
       </section>

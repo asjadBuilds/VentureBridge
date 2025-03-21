@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../ideas-listing/ideaslisting.css";
 import { IconContext } from "react-icons";
 import { FaMedkit } from "react-icons/fa";
@@ -10,14 +10,32 @@ import { IoSaveOutline } from "react-icons/io5";
 import { MdArrowOutward } from "react-icons/md";
 import { useState, useMemo } from "react";
 import countryList from "react-select-country-list";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { CONFIG } from "../../../config";
 const IdeasListing = () => {
   const [value, setValue] = useState("");
+  const [products, setProducts] = useState([]);
   const cardsData = [1,2,3,4,5,6,7,8,9,10,11,12];
+  const params = useParams()
   const options = useMemo(() => countryList().getData(), []);
   const countries = options.flat();
   const changeHandler = (value) => {
     setValue(value);
   };
+  useEffect(()=>{
+    fetchProductByCategory()
+  },[])
+  const fetchProductByCategory = async()=>{
+    try {
+      const categoryId = params?.categoryId
+      const {data} = await axios.post(CONFIG.getProductsByCategory,{categoryId})
+      console.log(data)
+      setProducts(data?.data)
+    } catch (error) {
+      
+    }
+  }
   return (
     // front hero image
     <div>
@@ -81,50 +99,56 @@ const IdeasListing = () => {
           Submit
         </button>
       </div>
-      <div className="flex md:flex-wrap max-md:flex-col w-full gap-3 items-center justify-center my-6 md:p-0 px-2">
-        {cardsData.map(()=>(
-        <div className="flex flex-col md:w-1/4 w-full  border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
-          <div className="relative h-40 overflow-hidden group ">
+      <div className="flex md:flex-wrap max-md:flex-col w-full gap-3 items-center justify-start my-6 md:px-8 px-2">
+        {products.map((product)=>(
+        <div key={product._id} className="flex flex-col md:w-1/4 w-full  border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
+          <div className="relative h-40 overflow-hidden group">
             <img
-              src="src\assets\ideas-listing\idea-thumbnail.jpg"
+              src={product?.images[0]}
               alt="idea-thumbnail"
               className="w-full h-full object-cover group-hover:blur-sm transition-all duration-500"
             />
-            <div class="items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden group-hover:flex transition-all duration-300 gap-x-4">
-              <a class="text-emerald-600 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 text-4xl">
+            <div className="items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden group-hover:flex transition-all duration-300 gap-x-4">
+              <a className="text-emerald-600 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 text-4xl">
               <CiHeart />
               </a>
-              <a class="action-btn rounded-full hover:text-white text-emerald-600 ms-1 text-2xl hover:bg-emerald-600 transition-all duration-200 p-1">
+              <a className="action-btn rounded-full hover:text-white text-emerald-600 ms-1 text-2xl hover:bg-emerald-600 transition-all duration-200 p-1">
               <IoSaveOutline />
               </a>
-              <a class="action-btn rounded-full hover:text-white  border-emerald-600/10 text-emerald-600 ms-1 text-3xl hover:bg-emerald-600 transition-all duration-200 p-1">
+              <a className="action-btn rounded-full hover:text-white  border-emerald-600/10 text-emerald-600 ms-1 text-3xl hover:bg-emerald-600 transition-all duration-200 p-1">
               <MdArrowOutward />
               </a>
               </div>
           </div>
           <div className="flex flex-col gap-y-1 p-3">
-            <h3 className="text-xl font-semibold">Mark Edward Travels</h3>
-            <span className="text-[14px] font-semibold underline decoration-emerald-600">Mark Ed.</span>
+            <h3 className="text-xl font-semibold">{product?.title}</h3>
+            <span className="text-[14px] font-semibold underline decoration-emerald-600">{product?.user?.username}</span>
             <p className="text-[#94a3b8] text-[15px]">
-              This Idea is Presented on the basis of travel data found from
-              Internet
+              {product?.description?.substring(0,100)+"..."}
             </p>
             <div className="flex flex-wrap gap-2 items-center *:cursor-pointer">
-              <a >
-              <span class="bg-orange-500/5 hover:bg-orange-500/20 inline-block text-orange-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+              {/* <a >
+              <span className="bg-orange-500/5 hover:bg-orange-500/20 inline-block text-orange-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
                 Full Time
               </span>
+              </a> */}
+              
+              <a>
+              <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"min: $"+product?.pricing?.minPrice}</span>
               </a>
               <a>
-              <span class="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">$4,000 - $4,500</span>
+              <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"avg: $"+product?.pricing?.avgPrice}</span>
               </a>
               <a>
-              <span class="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
+              <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"max: $"+product?.pricing?.maxPrice}</span>
+              </a>
+              {/* <a>
+              <span className="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
               <div>
               <CiLocationOn />
               </div>
                USA</span>
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import "../header/header.css";
+import jobstackFav from '../../assets/jobstack-fav.png';
+import jobstackFullLogo from '../../assets/full-logo.png';
+import fullLogoWhite from '../../assets/full-logo-white.png';
 import useDeviceWidth from "../../hooks/useDeviceWidth";
 const Header = () => {
   const [userDropdown, setUserDropdown] = useState(false);
@@ -64,21 +67,21 @@ const Header = () => {
         <div>
           <Link to={"/"}>
             <img
-              src="src\assets\jobstack-fav.png"
+              src={jobstackFav}
               alt="main-logo"
               className="md:hidden"
             />
             {isHomeRoute ? 
             <img
-            src="src\assets\full-logo.png"
+            src={jobstackFullLogo}
             alt="full-main-logo"
             className="max-md:hidden"
           /> : !isHomeRoute && !windowScroll ? <img
-          src="src/assets/full-logo-white.png"
+          src={fullLogoWhite}
           alt="white-main-logo"
           className="max-md:hidden"
         /> : !isHomeRoute && windowScroll ? <img
-        src="src\assets\full-logo.png"
+        src={jobstackFullLogo}
         alt="full-main-logo"
         className="max-md:hidden"
       /> : <></> }
@@ -93,20 +96,20 @@ const Header = () => {
                   !windowScroll && !isHomeRoute ? "text-white" : ""
                 }`}
               >
-                <span>Dropdown 1</span>
+                <span>Quick Links</span>
                 <i className="fa-solid fa-chevron-down"></i>
               </div>
               <ul
                 className={`dropdown-menu absolute top-[60px] shadow bg-white rounded flex flex-col items-center min-w-[180px] transition-all duration-200 opacity-0 invisible`}
               >
                 <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">
-                  Sub-item 1
+                  Contact Us
                 </li>
                 <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">
-                  Sub-item 2
+                  Privacy Policy
                 </li>
                 <li className="px-4 py-2 w-full border-b border-solid border-neutral-200">
-                  Sub-item 3
+                  About Us
                 </li>
               </ul>
             </li>
@@ -115,7 +118,7 @@ const Header = () => {
             <input
               type="text"
               placeholder="Search..."
-              className={`border-none outline-none text-sm w-36 ${!windowScroll && !isHomeRoute ?'bg-transparent':''}`}
+              className={`border-none outline-none text-sm bg-transparent w-36 ${!windowScroll && !isHomeRoute ?'bg-transparent':''}`}
             />
             <div className="absolute top-1 right-2">
               <i className={`fa-solid fa-magnifying-glass ${!windowScroll && !isHomeRoute ? 'text-white':''}`}></i>

@@ -23,7 +23,6 @@ const Login = () => {
         const handlePostLogin = async(values, { resetForm, setSubmitting })=>{
             try {
                 const response = await axios.post(CONFIG.loginUser, values);
-                console.log(response)
                 if(response.data?.success){
                     toast(response?.data?.message);
                     const accessToken = response.data.data.accessToken;
