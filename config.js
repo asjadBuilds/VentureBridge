@@ -4,5 +4,6 @@ export const CONFIG = {
     registerUser: BASE_URL + '/api/auth/registerUser',
     loginUser: BASE_URL + '/api/auth/loginUser',
     getAllCategories: BASE_URL + '/api/product/getAllCategories',
-    getProductsByCategory: BASE_URL + '/api/product/getProductsByCategory'
+    getProductsByCategory: BASE_URL + '/api/product/getProductsByCategory',
+    addProduct: BASE_URL+'/api/product/createProduct'
 }
