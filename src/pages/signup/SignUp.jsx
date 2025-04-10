@@ -40,7 +40,7 @@ const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
       const { data } = await axios.post(CONFIG.registerUser, formData);
       toast(data?.message);
       resetForm();
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       toast(error?.response?.data?.error || "Signup failed");
     } finally {

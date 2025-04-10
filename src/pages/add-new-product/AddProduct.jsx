@@ -149,7 +149,7 @@ const DOCUMENT_SUPPORTED_FORMATS = [
     const obj = {title:formObj.title, description:formObj.description, category:formObj.category}
     const formData = new FormData();
     Object.entries(obj).forEach(([key, value]) => formData.append(key, value));
-    formData.append('userId','67c8132929e4d676e166112a')
+    formData.append('userId','67e33fba18bd67a451e8623a')
     formData.append('pricing[minPrice]', formObj.minPrice);
     formData.append('pricing[avgPrice]', formObj.avgPrice);
     formData.append('pricing[maxPrice]', formObj.maxPrice);

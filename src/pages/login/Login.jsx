@@ -6,8 +6,13 @@ import axios from "axios";
 import { CONFIG } from "../../../config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
+import { useLoginStatus } from "../../contexts/LoginStatusContext";
+import { useUserDetails } from "../../contexts/UserDetailContext";
 const Login = () => {
     const navigate = useNavigate()
+    const {setLoginStatus} = useLoginStatus();
+    const {setUserDetails} = useUserDetails();
     let initialValues = {
          email: "",
         password: "",
@@ -22,15 +27,18 @@ const Login = () => {
         });
         const handlePostLogin = async(values, { resetForm, setSubmitting })=>{
             try {
-                const response = await axios.post(CONFIG.loginUser, values);
-                if(response.data?.success){
-                    toast(response?.data?.message);
-                    const accessToken = response.data.data.accessToken;
-                    const refreshToken = response.data.data.refreshToken;
-                    document.cookie=`accessToken=${accessToken}`
-                    document.cookie=`refreshToken=${refreshToken}`
-                    resetForm();
-                    navigate("/");
+                const {data} = await axios.post(CONFIG.loginUser, values,{
+                  withCredentials:true
+                });
+                console.log(data);
+                if(data?.success){
+                  setLoginStatus(true);
+                  setUserDetails(data?.data?.user)
+                  toast(data?.message);
+                  Cookies.set('role',data?.data?.user?.role)
+                  Cookies.set('userDetails',JSON.stringify(data?.data?.user))
+                  resetForm();
+                  navigate("/");
                 }
               } catch (error) {
                 toast(error?.response?.data?.error);

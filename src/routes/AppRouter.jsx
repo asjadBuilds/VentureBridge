@@ -4,11 +4,12 @@ import Home from "../pages/home/Home";
 import Layout from "../layout/Layout";
 import IdeasListing from "../pages/ideas-listing/IdeasListing";
 import ProductDetail from "../pages/product-detail/ProductDetail";
-import UserProfile from "../pages/user-profile/UserProfile";
-import UserDashboard from "../pages/user-dashboard/UserDashboard";
 import SignUp from "../pages/signup/SignUp";
 import Login from "../pages/login/Login";
 import AddProduct from "../pages/add-new-product/AddProduct";
+import Profile from "../pages/profile/Profile";
+import ChatInbox from "../pages/chat-inbox/ChatInbox";
+import Chat from "../components/chat/Chat";
 
 const AppRouter = () => {
     const router = createBrowserRouter([
@@ -25,25 +26,29 @@ const AppRouter = () => {
                     element:<IdeasListing/>
                 },
                 {
-                    path:'productDetail',
+                    path:'productDetail/:id',
                     element:<ProductDetail/>
                 },
                 {
                     path:'addProduct',
                     element:<AddProduct/>
-                }
+                },
+                {
+                    path:'profile/:userRole',
+                    element:<Profile/>
+                },
             ],
         },
-        {
-            path:'user-dashboard',
-            element:<UserDashboard/>,
-            children:[
-                {
-                    path:'user-profile',
-                    element:<UserProfile/>
-                }
-            ]
-        },
+        // {
+        //     path:'user-dashboard',
+        //     element:<UserDashboard/>,
+        //     children:[
+        //         {
+        //             path:'user-profile',
+        //             element:<UserProfile/>
+        //         }
+        //     ]
+        // },
         {
             path:'signup',
             element:<SignUp/>
@@ -51,6 +56,20 @@ const AppRouter = () => {
         {
             path:'login',
             element:<Login/>
+        },
+        {
+            path:'inbox/:userId',
+            element:<ChatInbox/>,
+            children:[
+                {
+                    path:'inbox/:userId',
+                    element:<ChatInbox/>
+                },
+                {
+                    path:'chat/:chatId',
+                    element:<Chat/>
+                }
+            ]
         }
     ])
   return <RouterProvider router={router}/>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../product-detail/productdetail.css'
 import { LuUserRoundCheck } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
@@ -12,20 +12,40 @@ import { CiHeart } from "react-icons/ci";
 import { IoSaveOutline } from "react-icons/io5";
 import { MdArrowOutward } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { CONFIG } from '../../../config';
 const ProductDetail = () => {
-  const relatedCardData=[1,2,3];
+  const params = useParams();
+  const [productId, setProductId] = useState('');
+  const [productDetail, setProductDetail] = useState({})
+  useEffect(() => {
+    setProductId(params.id)
+    fetchProductDetails();
+  }, [productId])
+  const fetchProductDetails = async () => {
+    try {
+      console.log(productId)
+      const { data } = await axios.post(CONFIG.getProductById, { productId });
+      console.log(data);
+      setProductDetail(data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const relatedCardData = [1, 2, 3];
   return (
     <div className='mb-10'>
       {/* hero section */}
-        <div className='relative w-full bg-front py-36 rounded-b-[20px] md:rounded-b-[80px] overflow-hidden'>
-          <div className='absolute inset-0 bg-emerald-900/90'></div>
-          <div className='text-center text-white text-4xl relative font-semibold'>Idea Detail</div>
-          <div className='absolute left-1/2 -translate-x-1/2 bottom-0 flex items-center justify-center gap-2 font-medium text-white/50 max-md:text-xs text-nowrap mb-2'>
-            <span>Jobstack</span> &lt; <span>Ideas</span> &lt; <span className='text-white'>Idea Detail</span>
-          </div>
+      <div className='relative w-full bg-front py-36 rounded-b-[20px] md:rounded-b-[80px] overflow-hidden'>
+        <div className='absolute inset-0 bg-emerald-900/90'></div>
+        <div className='text-center text-white text-4xl relative font-semibold'>Idea Detail</div>
+        <div className='absolute left-1/2 -translate-x-1/2 bottom-0 flex items-center justify-center gap-2 font-medium text-white/50 max-md:text-xs text-nowrap mb-2'>
+          <span>Jobstack</span> &lt; <span>Ideas</span> &lt; <span className='text-white'>Idea Detail</span>
         </div>
-        {/* body container */}
-        <div className='container'>
+      </div>
+      {/* body container */}
+      <div className='container'>
         <div className='flex max-md:flex-col items-start mt-10 gap-4'>
           {/* sidebar */}
           <div className='flex flex-col md:sticky top-20 rounded-md shadow bg-white w-full md:w-[70%]'>
@@ -87,99 +107,103 @@ const ProductDetail = () => {
             </div>
           </div>
           {/* content */}
-          <div>
+          {/* <div>
             <h5 className='text-[17px] font-semibold'>Idea Description</h5>
             <p className='text-slate-400 mt-4'>One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others - which creates a distinct visual impression. Moreover, in Latin only words at the beginning of sentences are capitalized.</p>
             <p className='text-slate-400 mt-4'>
-            This means that Lorem Ipsum cannot accurately represent, for example, German, in which all nouns are capitalized. Thus, Lorem Ipsum has only limited suitability as a visual filler for German texts. If the fill text is intended to illustrate the characteristics of different typefaces.
+              This means that Lorem Ipsum cannot accurately represent, for example, German, in which all nouns are capitalized. Thus, Lorem Ipsum has only limited suitability as a visual filler for German texts. If the fill text is intended to illustrate the characteristics of different typefaces.
             </p>
             <p className='text-slate-400 mt-4'>
-            It sometimes makes sense to select texts containing the various letters and symbols specific to the output language.
+              It sometimes makes sense to select texts containing the various letters and symbols specific to the output language.
             </p>
             <h5 className='text-[17px] font-semibold mt-4'>Features</h5>
             <p className='text-slate-400 mt-4'>
-            It sometimes makes sense to select texts containing the various letters and symbols specific to the output language.
+              It sometimes makes sense to select texts containing the various letters and symbols specific to the output language.
             </p>
             <ul className='flex flex-col'>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Participate in requirements analysis
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Write clean, scalable code using C# and .NET frameworks
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Test and deploy applications and systems
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Revise, update, refactor and debug code
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Participate in requirements analysis
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Develop documentation throughout the software development life cycle (SDLC)
               </li>
             </ul>
             <h5 className='text-[17px] font-semibold mt-4'>Requirements</h5>
             <p className='text-slate-400 mt-4'>
-            It sometimes makes sense to select texts containing the various letters and symbols specific to the output language.
+              It sometimes makes sense to select texts containing the various letters and symbols specific to the output language.
             </p>
             <ul className='flex flex-col'>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Proven experience as a .NET Developer or Application Developer
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 good understanding of SQL and Relational Databases, specifically Microsoft SQL Server.
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Experience designing, developing and creating RESTful web services and APIs
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Basic know how of Agile process and practices
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Good understanding of object-oriented programming.
               </li>
               <li className='text-slate-400 mt-2 inline-flex items-center gap-2'>
                 <div className='text-emerald-600'>
-                <IoArrowRedoSharp />
+                  <IoArrowRedoSharp />
                 </div>
                 Good understanding of concurrent programming.
               </li>
             </ul>
+            <button className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Apply Now</button>
+          </div> */}
+          <div className="flex flex-col">
+            <p dangerouslySetInnerHTML={{ __html: productDetail?.description }}></p>
             <button className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Apply Now</button>
           </div>
         </div>
@@ -189,55 +213,55 @@ const ProductDetail = () => {
           <p className='text-slate-400 max-w-xl mx-auto'>Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over 30000+ companies worldwide.</p>
         </div>
         <div className='flex md:flex-wrap max-md:flex-col w-full mt-6 gap-6 items-center justify-center'>
-        {relatedCardData.map(()=>(
-          <div className="flex flex-col md:w-1/4 w-full  border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
-                    <div className="relative h-40 overflow-hidden group ">
-                      <img
-                        src="src\assets\ideas-listing\idea-thumbnail.jpg"
-                        alt="idea-thumbnail"
-                        className="w-full h-full object-cover group-hover:blur-sm transition-all duration-500"
-                      />
-                      <div class="items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden group-hover:flex transition-all duration-300 gap-x-4">
-                        <a class="text-emerald-600 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 text-4xl">
-                        <CiHeart />
-                        </a>
-                        <a class="action-btn rounded-full hover:text-white text-emerald-600 ms-1 text-2xl hover:bg-emerald-600 transition-all duration-200 p-1">
-                        <IoSaveOutline />
-                        </a>
-                        <a class="action-btn rounded-full hover:text-white  border-emerald-600/10 text-emerald-600 ms-1 text-3xl hover:bg-emerald-600 transition-all duration-200 p-1">
-                        <MdArrowOutward />
-                        </a>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-y-1 p-3">
-                      <h3 className="text-xl font-semibold">Mark Edward Travels</h3>
-                      <span className="text-[14px] font-semibold underline decoration-emerald-600">Mark Ed.</span>
-                      <p className="text-[#94a3b8] text-[15px]">
-                        This Idea is Presented on the basis of travel data found from
-                        Internet
-                      </p>
-                      <div className="flex flex-wrap gap-2 items-center *:cursor-pointer">
-                        <a >
-                        <span class="bg-orange-500/5 hover:bg-orange-500/20 inline-block text-orange-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
-                          Full Time
-                        </span>
-                        </a>
-                        <a>
-                        <span class="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">$4,000 - $4,500</span>
-                        </a>
-                        <a>
-                        <span class="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
-                        <div>
+          {relatedCardData.map((index) => (
+            <div key={index} className="flex flex-col md:w-1/4 w-full  border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
+              <div className="relative h-40 overflow-hidden group ">
+                <img
+                  src="src\assets\ideas-listing\idea-thumbnail.jpg"
+                  alt="idea-thumbnail"
+                  className="w-full h-full object-cover group-hover:blur-sm transition-all duration-500"
+                />
+                <div className="items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden group-hover:flex transition-all duration-300 gap-x-4">
+                  <a className="text-emerald-600 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 text-4xl">
+                    <CiHeart />
+                  </a>
+                  <a className="action-btn rounded-full hover:text-white text-emerald-600 ms-1 text-2xl hover:bg-emerald-600 transition-all duration-200 p-1">
+                    <IoSaveOutline />
+                  </a>
+                  <a className="action-btn rounded-full hover:text-white  border-emerald-600/10 text-emerald-600 ms-1 text-3xl hover:bg-emerald-600 transition-all duration-200 p-1">
+                    <MdArrowOutward />
+                  </a>
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-1 p-3">
+                <h3 className="text-xl font-semibold">Mark Edward Travels</h3>
+                <span className="text-[14px] font-semibold underline decoration-emerald-600">Mark Ed.</span>
+                <p className="text-[#94a3b8] text-[15px]">
+                  This Idea is Presented on the basis of travel data found from
+                  Internet
+                </p>
+                <div className="flex flex-wrap gap-2 items-center *:cursor-pointer">
+                  <a >
+                    <span className="bg-orange-500/5 hover:bg-orange-500/20 inline-block text-orange-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+                      Full Time
+                    </span>
+                  </a>
+                  <a>
+                    <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">$4,000 - $4,500</span>
+                  </a>
+                  <a>
+                    <span className="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
+                      <div>
                         <CiLocationOn />
-                        </div>
-                         USA</span>
-                        </a>
                       </div>
-                    </div>
-                  </div>
-        ))}
+                      USA</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        </div>
+      </div>
     </div>
   )
 }
