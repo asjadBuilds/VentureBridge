@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000'
+const BASE_URL = 'https://venturebridge-backend-production.up.railway.app/'
 
 export const CONFIG = {
     registerUser: BASE_URL + '/api/auth/registerUser',
