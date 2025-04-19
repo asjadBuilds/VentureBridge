@@ -447,7 +447,7 @@ const Profile = () => {
             <div className="text-center">Data for Investor under dev.</div>
           </div>}
           <div>
-            <Link to={`/inbox/${details._id}`}>
+            <Link to={`/inbox/${details._id}/landing`}>
             <Button bg={'#059669'} variant="filled">See Inbox</Button>
             </Link>
           </div>

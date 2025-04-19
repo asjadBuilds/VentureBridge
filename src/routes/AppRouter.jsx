@@ -10,6 +10,7 @@ import AddProduct from "../pages/add-new-product/AddProduct";
 import Profile from "../pages/profile/Profile";
 import ChatInbox from "../pages/chat-inbox/ChatInbox";
 import Chat from "../components/chat/Chat";
+import LandingChats from "../components/landing-chats/LandingChats";
 
 const AppRouter = () => {
     const router = createBrowserRouter([
@@ -39,16 +40,6 @@ const AppRouter = () => {
                 },
             ],
         },
-        // {
-        //     path:'user-dashboard',
-        //     element:<UserDashboard/>,
-        //     children:[
-        //         {
-        //             path:'user-profile',
-        //             element:<UserProfile/>
-        //         }
-        //     ]
-        // },
         {
             path:'signup',
             element:<SignUp/>
@@ -62,8 +53,8 @@ const AppRouter = () => {
             element:<ChatInbox/>,
             children:[
                 {
-                    path:'inbox/:userId',
-                    element:<ChatInbox/>
+                    path:'landing',
+                    element:<LandingChats/>
                 },
                 {
                     path:'chat/:chatId',

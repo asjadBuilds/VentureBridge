@@ -11,7 +11,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { useState, useMemo } from "react";
 import countryList from "react-select-country-list";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CONFIG } from "../../../config";
 const IdeasListing = () => {
   const [value, setValue] = useState("");
@@ -101,7 +101,8 @@ const IdeasListing = () => {
       </div>
       <div className="flex md:flex-wrap max-md:flex-col w-full gap-3 items-center justify-start my-6 md:px-8 px-2">
         {products.map((product)=>(
-        <div key={product._id} className="flex flex-col md:w-1/4 w-full  border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
+          <Link to={`/productDetail/${product._id}`} className="md:w-1/4 w-full">
+        <div key={product._id} className="flex flex-col   border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
           <div className="relative h-40 overflow-hidden group">
             <img
               src={product?.images[0]}
@@ -152,6 +153,7 @@ const IdeasListing = () => {
             </div>
           </div>
         </div>
+          </Link>
         ))}
       </div>
     </div>

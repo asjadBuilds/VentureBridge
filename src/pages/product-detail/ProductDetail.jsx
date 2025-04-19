@@ -12,23 +12,39 @@ import { CiHeart } from "react-icons/ci";
 import { IoSaveOutline } from "react-icons/io5";
 import { MdArrowOutward } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { CONFIG } from '../../../config';
+import { useUserDetails } from '../../contexts/UserDetailContext';
 const ProductDetail = () => {
   const params = useParams();
   const [productId, setProductId] = useState('');
-  const [productDetail, setProductDetail] = useState({})
+  const [productDetail, setProductDetail] = useState({});
+  const [conversation, setConversation] = useState({});
+  const navigate = useNavigate();
+  const {details} = useUserDetails();
   useEffect(() => {
     setProductId(params.id)
     fetchProductDetails();
-  }, [productId])
+  }, [productId,conversation])
   const fetchProductDetails = async () => {
     try {
       console.log(productId)
       const { data } = await axios.post(CONFIG.getProductById, { productId });
-      console.log(data);
       setProductDetail(data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const onChatHandler = async()=>{
+    try {
+      const {data} = await axios.post(CONFIG.getSingleConversation,{receiverId:productDetail?.user},{
+        withCredentials:true
+      })
+      if(data.success){
+        setConversation(data?.data);
+        navigate(`/inbox/${details._id}/chat/${data.data._id}`)
+      }
     } catch (error) {
       console.log(error)
     }
@@ -204,7 +220,9 @@ const ProductDetail = () => {
           </div> */}
           <div className="flex flex-col">
             <p dangerouslySetInnerHTML={{ __html: productDetail?.description }}></p>
-            <button className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Apply Now</button>
+            
+            <button onClick={onChatHandler} className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Apply Now</button>
+            
           </div>
         </div>
         {/* related ideas */}

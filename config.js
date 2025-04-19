@@ -3,10 +3,12 @@ const BASE_URL = 'http://localhost:5000'
 export const CONFIG = {
     registerUser: BASE_URL + '/api/auth/registerUser',
     loginUser: BASE_URL + '/api/auth/loginUser',
+    //product
     getAllCategories: BASE_URL + '/api/product/getAllCategories',
     getProductsByCategory: BASE_URL + '/api/product/getProductsByCategory',
     addProduct: BASE_URL+'/api/product/createProduct',
     getProductById: BASE_URL + '/api/product/getProductById',
+    //userInfo
     getUserInfo: BASE_URL+'/api/user/getUserInfo',
     updateUserInfo: BASE_URL + '/api/user/updateUserInfo',
     updateUserRole: BASE_URL + '/api/user/updateUserRole',
@@ -18,6 +20,11 @@ export const CONFIG = {
     editUserEducation: BASE_URL + '/api/user/editUserEducation',
     editUserExperience: BASE_URL + '/api/user/editUserExperience',
     editUserCertification: BASE_URL + '/api/user/editUserCertification',
-    editUserLanguage: BASE_URL + '/api/user/editUserLanguage'
+    editUserLanguage: BASE_URL + '/api/user/editUserLanguage',
+    //chat
+    getUserConversations: BASE_URL + '/api/chat/getConversations',
+    getMessagesByConversation: BASE_URL + '/api/chat/getMessages',
+    sendMessage: BASE_URL + '/api/chat/sendMessage',
+    getSingleConversation: BASE_URL + '/api/chat/getSingleConversation'
 
 }
