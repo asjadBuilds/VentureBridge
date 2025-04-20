@@ -10,6 +10,7 @@ import axios from "axios";
 import { CONFIG } from "../../../config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import vbAbstract from '../../assets/VB-abstract.svg'
 const SignUp = () => {
   const FILE_SIZE_LIMIT = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
@@ -69,7 +70,7 @@ const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
     <div className="w-screen  flex max-md:flex-col-reverse max-md:gap-4 max-md:p-4 items-center justify-center">
       <div className=" flex flex-col items-center gap-4 w-full md:max-w-[480px] md:p-[60px]">
         <div>
-          <img src="src\assets\VB-abstract.svg" className="w-24" />
+          <img src={vbAbstract} className="w-24" />
         </div>
         <div className="text-center font-[Lato]">
           <h2 className="text-2xl font-bold mb-2">

@@ -8,6 +8,7 @@ import { MdOutlineChevronRight } from "react-icons/md";
 import { useState, useMemo } from "react";
 import countryList from "react-select-country-list";
 import { IconContext } from "react-icons";
+import contactIdeas from '../../assets/home/contact-ideas.png'
 import './home.css'
 import axios from "axios";
 import { CONFIG } from "../../../config";
@@ -152,7 +153,7 @@ const Home = () => {
       <section className="w-full py-16 px-2">
         <div className="container flex max-md:flex-col gap-2 items-center">
           <div className="w-full md:w-1/2">
-            <img src="src\assets\home\contact-ideas.png" alt="contact-ideas" />
+            <img src={contactIdeas} alt="contact-ideas" />
           </div>
           <div className="flex flex-col items-start gap-y-4">
             <h3 className="mb-6 md:text-[26px] text-2xl md:leading-normal leading-normal font-semibold">

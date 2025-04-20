@@ -6,11 +6,12 @@ import { FaInstagram } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { TiSocialYoutube } from "react-icons/ti";
+import fullLogoWhite from "../../assets/full-logo-white.png";
 const Footer = () => {
   return (
     <div className='w-full flex flex-col justify-center bg-slate-900'>
       <div className='container py-12'>
-        <div className='mb-8'><img src="src\assets\full-logo-white.png" alt="full-logo" className='mx-auto'/></div>
+        <div className='mb-8'><img src={fullLogoWhite} alt="full-logo" className='mx-auto'/></div>
         <ul className='flex flex-wrap justify-center gap-4 text-white text-[15px] font-medium'>
           <li>Home</li>
           <li>How it Works</li>

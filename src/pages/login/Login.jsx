@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie'
 import { useLoginStatus } from "../../contexts/LoginStatusContext";
 import { useUserDetails } from "../../contexts/UserDetailContext";
+import vbAbstract from '../../assets/VB-abstract.svg'
+import loginGraphics from '../../assets/login-graphics.jpg'
 const Login = () => {
     const navigate = useNavigate()
     const {setLoginStatus} = useLoginStatus();
@@ -50,7 +52,7 @@ const Login = () => {
     <div className="w-screen  flex max-md:flex-col-reverse max-md:gap-4  items-center justify-center">
       <div className=" flex flex-col items-center gap-4 md:px-[10%] md:w-[50vw] max-md:p-4">
       <div>
-          <img src="src\assets\VB-abstract.svg" className="w-24" />
+          <img src={vbAbstract} className="w-24" />
         </div>
         <div className="text-center font-[Lato]">
           <h2 className="text-2xl font-bold mb-2">
@@ -103,7 +105,7 @@ const Login = () => {
       </div>
       <div className="md:w-[50vw] md:h-[100dvh]">
         <img
-          src="src\assets\login-graphics.jpg"
+          src={loginGraphics}
           alt="login-graphic"
           className="w-full h-full"
         />
