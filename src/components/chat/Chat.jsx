@@ -8,11 +8,13 @@ import axios from 'axios';
 import { CONFIG } from '../../../config';
 import socket from '../../../socket';
 import { useUserDetails } from '../../contexts/UserDetailContext';
+import { useReceiverChat } from '../../contexts/ReceiverChatContext';
 const Chat = () => {
     const [input, setInput] = useState('')
    const {details} = useUserDetails()
     const params = useParams();
     const [messages, setMessages] = useState([])
+    const {receiverDetails} = useReceiverChat();
     
     useEffect(() => {
         fetchMessages()
@@ -25,16 +27,6 @@ const Chat = () => {
     return () => socket.off('receiveMessage')
         
     }, [params.chatId, details])
-
-    const fetchConversationDetails = async()=>{
-        try {
-            const {data} = await axios.post(CONFIG.getSingleConversation,{receiverId:productDetail?.user},{
-                withCredentials:true
-              })
-        } catch (error) {
-            
-        }
-    }
     
     const fetchMessages = async()=>{
         const {data} = await axios.get(CONFIG.getMessagesByConversation+`/${params?.chatId}`,{withCredentials:true})
@@ -72,8 +64,8 @@ const Chat = () => {
         <div className='flex flex-col w-full'>
             <div className='flex justify-between bg-emerald-600 p-4'>
                 <div className='flex items-center gap-3 text-white font-semibold'>
-                    <Avatar src={details?.avatar} size={'md'} />
-                    Asjad Abrar
+                    <Avatar src={receiverDetails?.avatar} size={'md'} />
+                    {receiverDetails?.username}
                 </div>
             </div>
             <div className='chat-background h-[calc(100dvh-140px)] overflow-y-auto'>

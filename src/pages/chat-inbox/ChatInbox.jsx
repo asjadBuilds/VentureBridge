@@ -5,10 +5,12 @@ import { Input } from '@mantine/core'
 import axios from 'axios'
 import { CONFIG } from '../../../config'
 import { useUserDetails } from '../../contexts/UserDetailContext'
+import { useReceiverChat } from '../../contexts/ReceiverChatContext'
 const ChatInbox = () => {
     const [conversations, setConversations] = useState([]);
     const [activeConversation, setActiveConversation] = useState('')
     const {details} = useUserDetails();
+    const {setRecDetails} = useReceiverChat();
     const navigate = useNavigate();
     useEffect(()=>{
         fetchUserConversations()
@@ -26,6 +28,7 @@ const ChatInbox = () => {
                     date: new Date(conv.updatedAt),
                     unread: 0, // or set count
                     conversationId: conv._id,
+                    receiverId: conv.receiver?._id
                   }));
             
                   setConversations(formatted);
@@ -34,8 +37,18 @@ const ChatInbox = () => {
             console.log(error)
         }
     }
-    const openConversationHandler = async(conversationId)=>{
+    const openConversationHandler = async(conversationId, receiverId)=>{
         // setActiveConversation(conversationId)
+        try {
+            const {data} = await axios.post(CONFIG.getSingleConversation,{receiverId},{
+              withCredentials:true
+            })
+            if(data.success){
+                setRecDetails(data?.data?.receiverField)
+            }
+          } catch (error) {
+            console.log(error)
+          }
         try {
            const {data} = await axios.get(CONFIG.getMessagesByConversation+`/${conversationId}`,{withCredentials:true})
            if(data?.success){
@@ -44,7 +57,6 @@ const ChatInbox = () => {
         } catch (error) {
             console.log(error)
         }
-        console.log(conversationId)
     }
     return (
         <div className='flex w-full h-screen'>
@@ -56,7 +68,8 @@ const ChatInbox = () => {
                 <ChatList
                 
                     className={`chat-list`}
-                    onClick={(item)=>openConversationHandler(item._id)}
+                    onClick={(item)=>{openConversationHandler(item._id,item?.receiverId)
+                    }}
                     dataSource={conversations} />
             </div>
             <div className='w-full'>

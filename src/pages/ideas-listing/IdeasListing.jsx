@@ -30,7 +30,6 @@ const IdeasListing = () => {
     try {
       const categoryId = params?.categoryId
       const {data} = await axios.post(CONFIG.getProductsByCategory,{categoryId})
-      console.log(data)
       setProducts(data?.data)
     } catch (error) {
       

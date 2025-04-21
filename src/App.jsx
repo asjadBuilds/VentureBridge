@@ -18,12 +18,13 @@ function App() {
  useEffect(()=>{
    const userLogin = Cookies.get('accessToken');
    const userDetails = Cookies.get('userDetails');
-   if(userLogin && userDetails){
+   if(userLogin || userDetails){
      setIsLogin(true)
      setLoginStatus(true);
      setUserDetails(JSON.parse(userDetails))
    }
- },[isLogin])
+   
+ },[])
 
   return (
     <MantineProvider>

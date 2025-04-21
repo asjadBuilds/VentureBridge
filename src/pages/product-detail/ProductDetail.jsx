@@ -16,6 +16,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { CONFIG } from '../../../config';
 import { useUserDetails } from '../../contexts/UserDetailContext';
+import { useReceiverChat } from '../../contexts/ReceiverChatContext';
 const ProductDetail = () => {
   const params = useParams();
   const [productId, setProductId] = useState('');
@@ -23,13 +24,13 @@ const ProductDetail = () => {
   const [conversation, setConversation] = useState({});
   const navigate = useNavigate();
   const {details} = useUserDetails();
+  const {setRecDetails} = useReceiverChat()
   useEffect(() => {
     setProductId(params.id)
     fetchProductDetails();
   }, [productId,conversation])
   const fetchProductDetails = async () => {
     try {
-      console.log(productId)
       const { data } = await axios.post(CONFIG.getProductById, { productId });
       setProductDetail(data?.data)
     } catch (error) {
@@ -43,6 +44,9 @@ const ProductDetail = () => {
       })
       if(data.success){
         setConversation(data?.data);
+        
+          setRecDetails(data?.data?.receiverField)
+      
         navigate(`/inbox/${details._id}/chat/${data.data._id}`)
       }
     } catch (error) {

@@ -28,7 +28,6 @@ const Home = () => {
   const getAllCategories = async()=>{
     try {
       const {data} = await axios.get(CONFIG.getAllCategories)
-      console.log(data)
       if(data.success){
         setCategories(data?.data)
       }

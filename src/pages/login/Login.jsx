@@ -32,7 +32,6 @@ const Login = () => {
                 const {data} = await axios.post(CONFIG.loginUser, values,{
                   withCredentials:true
                 });
-                console.log(data);
                 if(data?.success){
                   setLoginStatus(true);
                   setUserDetails(data?.data?.user)

@@ -143,7 +143,6 @@ const DOCUMENT_SUPPORTED_FORMATS = [
       }
   }
   const handleSubmission =async(formObj)=>{
-    console.log(formObj)
 
     // const pricing = {minPrice,avgPrice,maxPrice}
     const obj = {title:formObj.title, description:formObj.description, category:formObj.category}
@@ -157,7 +156,6 @@ const DOCUMENT_SUPPORTED_FORMATS = [
 
     try {
         const {data} = await axios.post(CONFIG.addProduct,formData,{withCredentials:true})
-        console.log(data)
     } catch (error) {
         console.log(error)
     }

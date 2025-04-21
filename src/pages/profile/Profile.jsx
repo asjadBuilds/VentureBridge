@@ -145,7 +145,6 @@ const Profile = () => {
   const fetchUserProducts = async () => {
     try {
       const { data } = await axios.post(CONFIG.getUserProducts, { userId });
-      console.log(data);
       setUserProducts(data.data);
     } catch (error) {
       console.log(error)
@@ -158,10 +157,8 @@ const Profile = () => {
     } else {
       formObj.grade = formObj.grade + " " + grade;
     }
-    console.log(formObj)
     try {
       const { data } = await axios.post(CONFIG.addUserEducation, { ...formObj, userId })
-      console.log(data)
       eduClose()
       fetchUserInfo()
     } catch (error) {
@@ -170,10 +167,8 @@ const Profile = () => {
   }
   const onAddExpSubmission = async (formObj) => {
     formObj.duration = formObj.duration + " " + duration;
-    console.log(formObj)
     try {
       const { data } = await axios.post(CONFIG.addUserExperience, { ...formObj, userId })
-      console.log(data)
       expClose()
       fetchUserInfo()
     } catch (error) {
@@ -182,10 +177,8 @@ const Profile = () => {
   }
   const onAddCertSubmission = async (formObj) => {
     formObj.duration = formObj.duration + " " + duration;
-    console.log(formObj)
     try {
       const { data } = await axios.post(CONFIG.addUserCertification, { ...formObj, userId })
-      console.log(data)
       certClose()
       fetchUserInfo()
     } catch (error) {
@@ -193,10 +186,8 @@ const Profile = () => {
     }
   }
   const onAddLangSubmission = async (formObj) => {
-    console.log(formObj)
     try {
       const { data } = await axios.post(CONFIG.addUserLanguage, { ...formObj, userId })
-      console.log(data)
       langClose();
       fetchUserInfo()
     } catch (error) {
