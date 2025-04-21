@@ -36,6 +36,9 @@ const Login = () => {
                   setLoginStatus(true);
                   setUserDetails(data?.data?.user)
                   toast(data?.message);
+                  localStorage.setItem('accessToken',data?.data?.accessToken)
+                  localStorage.setItem('refreshToken',data?.data?.refreshToken)
+                  localStorage.setItem('userDetails',JSON.stringify(data?.data?.user))
                   // Cookies.set('role',data?.data?.user?.role)
                   // Cookies.set('userDetails',JSON.stringify(data?.data?.user))
                   resetForm();

@@ -28,7 +28,6 @@ const ProductDetail = () => {
   const {details} = useUserDetails();
   const {setRecDetails} = useReceiverChat()
   useEffect(() => {
-    console.log(details)
     setProductId(params.id)
     fetchProductDetails();
     details?.savedProducts?.forEach((id)=> {
@@ -66,6 +65,8 @@ const ProductDetail = () => {
       const {data} = await axios.post(CONFIG.addToSaveProduct,{productId},{withCredentials:true})
       if(data.success){
         toast.success(data.message)
+        localStorage.setItem('userDetails', JSON.stringify(data.data));
+        setProductSaved(true)
       }
     } catch (error) {
       console.log(error)
@@ -76,6 +77,8 @@ const ProductDetail = () => {
       const {data} = await axios.post(CONFIG.removeFromSaveProduct,{productId},{withCredentials:true})
       if(data.success){
         toast.success(data.message)
+        localStorage.setItem('userDetails', JSON.stringify(data.data));
+        setProductSaved(false)
       }
     } catch (error) {
       console.log(error)

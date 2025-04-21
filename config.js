@@ -12,6 +12,7 @@ export const CONFIG = {
     getProductById: BASE_URL + '/api/product/getProductById',
     addToSaveProduct: BASE_URL + '/api/product/addToSaveProducts',
     removeFromSaveProduct : BASE_URL + '/api/product/removeFromSaveProducts',
+    getSavedProducts: BASE_URL + '/api/product/getSavedProducts',
     //userInfo
     getUserInfo: BASE_URL+'/api/user/getUserInfo',
     updateUserInfo: BASE_URL + '/api/user/updateUserInfo',

@@ -17,6 +17,7 @@ import { useUserDetails } from "../../contexts/UserDetailContext";
 const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userProducts, setUserProducts] = useState([]);
+  const [userSavedProducts, setUserSavedProducts] = useState([]);
   const [duration, setDuration] = useState('');
   const [grade, setGrade] = useState('');
   const [eduOpened, { open: eduOpen, close: eduClose }] = useDisclosure(false);
@@ -128,7 +129,11 @@ const Profile = () => {
   })
   useEffect(() => {
     fetchUserInfo();
-    fetchUserProducts();
+    if(role === 'investor'){
+      fetchUserSavedProducts()
+    }else{
+      fetchUserProducts();
+    }
     setRole(params?.userRole)
   }, [role]);
   const fetchUserInfo = async () => {
@@ -145,6 +150,16 @@ const Profile = () => {
     try {
       const { data } = await axios.post(CONFIG.getUserProducts,{withCredentials:true});
       setUserProducts(data.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const fetchUserSavedProducts = async () => {
+    try {
+      const { data } = await axios.post(CONFIG.getSavedProducts, { withCredentials: true });
+      if(data.success){
+        setUserSavedProducts(data.data?.savedProducts);
+      }
     } catch (error) {
       console.log(error)
     }
@@ -433,9 +448,70 @@ const Profile = () => {
             <Button variant="outline" color="#059669">Show all my Ideas</Button>
           </div>
         </div> :
-          <div className="w-1/2">
-            <div className="text-center">Data for Investor under dev.</div>
-          </div>}
+        <div className="w-full md:w-1/2">
+          <h3 className="text-lg font-semibold ml-12 mb-2">Saved Ideas</h3>
+<div className="flex flex-wrap  justify-center gap-6">
+            {userSavedProducts?.slice(0, 4).map((product) => (
+            <Link to={`/productDetail/${product._id}`} className="md:w-[40%] w-full">
+              <div key={product._id} className="flex flex-col   border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
+                <div className="relative h-40 overflow-hidden group cursor-pointer">
+                  <img
+                    src={product?.images[0]}
+                    alt="idea-thumbnail"
+                    className="w-full h-full object-cover group-hover:blur-sm transition-all duration-500"
+                  />
+                  <div className="items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden group-hover:flex transition-all duration-300 gap-x-4">
+                    <a className="text-emerald-600 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 text-4xl">
+                      <CiHeart />
+                    </a>
+                    <a className="action-btn rounded-full hover:text-white text-emerald-600 ms-1 text-2xl hover:bg-emerald-600 transition-all duration-200 p-1">
+                      <IoSaveOutline />
+                    </a>
+                    <a className="action-btn rounded-full hover:text-white  border-emerald-600/10 text-emerald-600 ms-1 text-3xl hover:bg-emerald-600 transition-all duration-200 p-1">
+                      <MdArrowOutward />
+                    </a>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-y-1 p-3">
+                  <h3 className="text-xl font-semibold">{product?.title}</h3>
+                  <span className="text-[14px] font-semibold underline decoration-emerald-600">{product?.user?.username}</span>
+                  <p className="text-[#94a3b8] text-[15px]">
+                    {product?.description?.substring(0, 100) + "..."}
+                  </p>
+                  <div className="flex flex-wrap gap-2 items-center *:cursor-pointer">
+                    {/* <a >
+                      <span className="bg-orange-500/5 hover:bg-orange-500/20 inline-block text-orange-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+                        Full Time
+                      </span>
+                      </a> */}
+
+                    <a>
+                      <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"min: $" + product?.pricing?.minPrice}</span>
+                    </a>
+                    <a>
+                      <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"avg: $" + product?.pricing?.avgPrice}</span>
+                    </a>
+                    <a>
+                      <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"max: $" + product?.pricing?.maxPrice}</span>
+                    </a>
+                    {/* <a>
+                      <span className="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
+                      <div>
+                      <CiLocationOn />
+                      </div>
+                       USA</span>
+                      </a> */}
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+          {userSavedProducts?.length === 0 ? <div className="w-full">
+            <img src={noData} alt="no data for products" className="w-1/2 m-auto" />
+          </div> : <></>}
+          </div>
+        </div>
+          }
           <div>
             <Link to={`/inbox/${details._id}/landing`}>
             <Button bg={'#059669'} variant="filled">See Inbox</Button>

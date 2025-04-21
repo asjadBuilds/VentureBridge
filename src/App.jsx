@@ -16,8 +16,10 @@ function App() {
  const {setLoginStatus} = useLoginStatus()
  const {setUserDetails} = useUserDetails()
  useEffect(()=>{
-   const userLogin = Cookies.get('accessToken');
-   const userDetails = Cookies.get('userDetails');
+  //  const userLogin = Cookies.get('accessToken');
+  //  const userDetails = Cookies.get('userDetails');
+const userLogin = localStorage.getItem('accessToken');
+const userDetails = localStorage.getItem('userDetails');
    if(userLogin || userDetails){
      setIsLogin(true)
      setLoginStatus(true);

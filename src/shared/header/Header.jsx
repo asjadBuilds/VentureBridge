@@ -23,12 +23,12 @@ const Header = () => {
   const [isHomeRoute, setIsHomeRoute] = useState(false);
   const [role, setRole] = useState('')
   const {status} = useLoginStatus();
-  const {details} = useUserDetails();
+  const {details, setUserDetails} = useUserDetails();
   const userId = '67e33fba18bd67a451e8623a'
   const navigate = useNavigate()
   useEffect(() => {
-    console.log(Cookies.get('userDetails'))
-    setRole(Cookies.get('role'))
+    console.log(details)
+    setRole(details?.role)
     if (location.pathname === "/") {
       setIsHomeRoute(true);
     } else {
@@ -72,6 +72,12 @@ const Header = () => {
   const updateUserRole = async(role)=>{
     try {
       const {data} = await axios.post(CONFIG.updateUserRole,{role, userId},{withCredentials:true});
+      if(data.success){
+        localStorage.setItem('userDetails',JSON.stringify(data?.data))
+        setUserDetails(data?.data)
+        setRole(data?.data?.role)
+        toast.success(data.message)
+      }
       setRole(Cookies.get('role'))
     } catch (error) {
       console.log(error)
@@ -81,8 +87,10 @@ const Header = () => {
     try {
       const {data} = await axios.post(CONFIG.logoutUser,{withCredentials:true})
       if(data.success){
-        Cookies.remove('role');
-        Cookies.remove('userDetails')
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        localStorage.removeItem('userDetails')
+        setUserDetails(null)
         toast.success(data.message)
         navigate('/login')
       }
