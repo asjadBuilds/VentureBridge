@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../header/header.css";
 import jobstackFav from "../../assets/jobstack-fav.png";
 import jobstackFullLogo from "../../assets/full-logo.png";
 import fullLogoWhite from "../../assets/full-logo-white.png";
 import useDeviceWidth from "../../hooks/useDeviceWidth";
-import { Avatar, Button, Menu, Text } from "@mantine/core";
+import { Avatar, Button, Menu, MenuItem, Text } from "@mantine/core";
 import Cookies from 'js-cookie'
 import axios from "axios";
 import { CONFIG } from "../../../config";
 import { useLoginStatus } from "../../contexts/LoginStatusContext";
 import { useUserDetails } from "../../contexts/UserDetailContext";
+import { toast } from "react-toastify";
 const Header = () => {
   const [userDropdown, setUserDropdown] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(false);
@@ -24,7 +25,9 @@ const Header = () => {
   const {status} = useLoginStatus();
   const {details} = useUserDetails();
   const userId = '67e33fba18bd67a451e8623a'
+  const navigate = useNavigate()
   useEffect(() => {
+    console.log(Cookies.get('userDetails'))
     setRole(Cookies.get('role'))
     if (location.pathname === "/") {
       setIsHomeRoute(true);
@@ -70,6 +73,19 @@ const Header = () => {
     try {
       const {data} = await axios.post(CONFIG.updateUserRole,{role, userId},{withCredentials:true});
       setRole(Cookies.get('role'))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const logoutHandler = async()=>{
+    try {
+      const {data} = await axios.post(CONFIG.logoutUser,{withCredentials:true})
+      if(data.success){
+        Cookies.remove('role');
+        Cookies.remove('userDetails')
+        toast.success(data.message)
+        navigate('/login')
+      }
     } catch (error) {
       console.log(error)
     }
@@ -195,6 +211,12 @@ const Header = () => {
                 <Menu.Item>Settings</Menu.Item>
                 <Menu.Item>Inbox</Menu.Item>
                 <Menu.Item>Analytics</Menu.Item>
+                <Menu.Divider></Menu.Divider>
+                {status ? <MenuItem>
+                <div className="bg-emerald-600 text-white py-1 px-4 rounded-md font-medium text-center" onClick={logoutHandler}>
+                  Logout
+                </div>
+                </MenuItem>:<></>}
               </Menu.Dropdown>
             </Menu>
           </div>

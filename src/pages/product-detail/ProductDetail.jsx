@@ -17,17 +17,25 @@ import axios from 'axios';
 import { CONFIG } from '../../../config';
 import { useUserDetails } from '../../contexts/UserDetailContext';
 import { useReceiverChat } from '../../contexts/ReceiverChatContext';
+import { toast } from 'react-toastify';
 const ProductDetail = () => {
   const params = useParams();
   const [productId, setProductId] = useState('');
   const [productDetail, setProductDetail] = useState({});
   const [conversation, setConversation] = useState({});
+  const [productSaved, setProductSaved] = useState(false);
   const navigate = useNavigate();
   const {details} = useUserDetails();
   const {setRecDetails} = useReceiverChat()
   useEffect(() => {
+    console.log(details)
     setProductId(params.id)
     fetchProductDetails();
+    details?.savedProducts?.forEach((id)=> {
+      if(id === productId){
+        setProductSaved(true)
+      }
+    })
   }, [productId,conversation])
   const fetchProductDetails = async () => {
     try {
@@ -48,6 +56,26 @@ const ProductDetail = () => {
           setRecDetails(data?.data?.receiverField)
       
         navigate(`/inbox/${details._id}/chat/${data.data._id}`)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const addToSaveHandler = async()=> {
+    try {
+      const {data} = await axios.post(CONFIG.addToSaveProduct,{productId},{withCredentials:true})
+      if(data.success){
+        toast.success(data.message)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const removeFromSaveProduct = async()=>{
+    try {
+      const {data} = await axios.post(CONFIG.removeFromSaveProduct,{productId},{withCredentials:true})
+      if(data.success){
+        toast.success(data.message)
       }
     } catch (error) {
       console.log(error)
@@ -226,6 +254,12 @@ const ProductDetail = () => {
             <p dangerouslySetInnerHTML={{ __html: productDetail?.description }}></p>
             
             <button onClick={onChatHandler} className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Apply Now</button>
+            {productSaved ? 
+          <button onClick={removeFromSaveProduct} className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Remove from Saved Ideas</button>
+            : 
+            <button onClick={addToSaveHandler} className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Add to Save Ideas</button>
+              
+          }
             
           </div>
         </div>

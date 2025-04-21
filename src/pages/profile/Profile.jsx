@@ -216,7 +216,7 @@ const Profile = () => {
           <span>Jobstack</span> &lt; <span className="text-white">Profile</span>
         </div>
       </div>
-      <div className="flex max-md:flex-col items-start w-full px-8 mt-8">
+      <div className="flex max-md:flex-col items-start gap-4 w-full px-8 mt-8">
         <div className="flex flex-col w-full md:w-1/2">
           <Button onClick={updateInfoOpen} variant="filled" bg={'#059669'} w={180} mb={8} style={{ alignSelf: 'end' }}>Update Details</Button>
           <div className="flex justify-between items-center">
@@ -369,8 +369,8 @@ const Profile = () => {
         </div>
         {role === 'entrepreneur' ? <div className="flex flex-wrap w-full md:w-1/2 justify-center gap-6">
           {userProducts.slice(0, 4).map((product) => (
-            <Link to={`/productDetail/${product._id}`}>
-              <div key={product._id} className="flex flex-col md:w-[40%] w-full  border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
+            <Link to={`/productDetail/${product._id}`} className="md:w-[40%] w-full">
+              <div key={product._id} className="flex flex-col   border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
                 <div className="relative h-40 overflow-hidden group cursor-pointer">
                   <img
                     src={product?.images[0]}
