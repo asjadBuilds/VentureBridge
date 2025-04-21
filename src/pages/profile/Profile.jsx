@@ -71,7 +71,6 @@ const Profile = () => {
     level: Yup.string()
       .required('*Level is required'),
   });
-  const userId = "67e33fba18bd67a451e8623a";
   const updateBioInfoForm = useForm({
     mode: 'uncontrolled',
     validateInputOnChange: true,
@@ -134,7 +133,7 @@ const Profile = () => {
   }, [role]);
   const fetchUserInfo = async () => {
     try {
-      const { data } = await axios.post(CONFIG.getUserInfo, { userId },{
+      const { data } = await axios.post(CONFIG.getUserInfo,{
         withCredentials:true
       });
       setUserInfo(data.data);
@@ -144,7 +143,7 @@ const Profile = () => {
   };
   const fetchUserProducts = async () => {
     try {
-      const { data } = await axios.post(CONFIG.getUserProducts, { userId });
+      const { data } = await axios.post(CONFIG.getUserProducts,{withCredentials:true});
       setUserProducts(data.data);
     } catch (error) {
       console.log(error)
