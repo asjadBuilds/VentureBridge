@@ -12,6 +12,7 @@ import { CONFIG } from "../../../config";
 import { useLoginStatus } from "../../contexts/LoginStatusContext";
 import { useUserDetails } from "../../contexts/UserDetailContext";
 import { toast } from "react-toastify";
+import axiosInstance from "../../../axiosInstance";
 const Header = () => {
   const [userDropdown, setUserDropdown] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(false);
@@ -27,7 +28,6 @@ const Header = () => {
   const userId = '67e33fba18bd67a451e8623a'
   const navigate = useNavigate()
   useEffect(() => {
-    console.log(details)
     setRole(details?.role)
     if (location.pathname === "/") {
       setIsHomeRoute(true);
@@ -71,7 +71,7 @@ const Header = () => {
   };
   const updateUserRole = async(role)=>{
     try {
-      const {data} = await axios.post(CONFIG.updateUserRole,{role, userId},{withCredentials:true});
+      const {data} = await axiosInstance.post(CONFIG.updateUserRole,{role, userId});
       if(data.success){
         localStorage.setItem('userDetails',JSON.stringify(data?.data))
         setUserDetails(data?.data)
@@ -85,7 +85,7 @@ const Header = () => {
   }
   const logoutHandler = async()=>{
     try {
-      const {data} = await axios.post(CONFIG.logoutUser,{withCredentials:true})
+      const {data} = await axiosInstance.post(CONFIG.logoutUser,{withCredentials:true})
       if(data.success){
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')

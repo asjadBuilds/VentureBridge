@@ -11,6 +11,7 @@ import { useLoginStatus } from "../../contexts/LoginStatusContext";
 import { useUserDetails } from "../../contexts/UserDetailContext";
 import vbAbstract from '../../assets/VB-abstract.svg'
 import loginGraphics from '../../assets/login-graphics.jpg'
+import axiosInstance from "../../../axiosInstance";
 const Login = () => {
     const navigate = useNavigate()
     const {setLoginStatus} = useLoginStatus();
@@ -29,9 +30,7 @@ const Login = () => {
         });
         const handlePostLogin = async(values, { resetForm, setSubmitting })=>{
             try {
-                const {data} = await axios.post(CONFIG.loginUser, values,{
-                  withCredentials:true
-                });
+                const {data} = await axiosInstance.post(CONFIG.loginUser, values);
                 if(data?.success){
                   setLoginStatus(true);
                   setUserDetails(data?.data?.user)

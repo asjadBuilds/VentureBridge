@@ -10,7 +10,7 @@ import "react-chat-elements/dist/main.css"
 import {  useLoginStatus } from "./contexts/LoginStatusContext";
 import { useUserDetails } from "./contexts/UserDetailContext";
 import { useEffect, useState } from "react";
-import Cookies from 'js-cookie'
+import AxiosInterceptor from "./interceptors/AxiosInterceptor";
 function App() {
  const [isLogin, setIsLogin] = useState(false);
  const {setLoginStatus} = useLoginStatus()
@@ -25,14 +25,15 @@ const userDetails = localStorage.getItem('userDetails');
      setLoginStatus(true);
      setUserDetails(JSON.parse(userDetails))
    }
-   
  },[])
 
   return (
+    <AxiosInterceptor>
     <MantineProvider>
       <AppRouter/>
       <ToastContainer/>
     </MantineProvider>
+    </AxiosInterceptor>
   )
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/home/Home";
 import Layout from "../layout/Layout";
 import IdeasListing from "../pages/ideas-listing/IdeasListing";
@@ -38,6 +39,20 @@ const AppRouter = () => {
                     path:'profile/:userRole',
                     element:<Profile/>
                 },
+                {
+                    path:'inbox/:userId',
+                    element:<ChatInbox/>,
+                    children:[
+                        {
+                            path:'landing',
+                            element:<LandingChats/>
+                        },
+                        {
+                            path:'chat/:chatId',
+                            element:<Chat/>
+                        }
+                    ]
+                }
             ],
         },
         {
@@ -48,22 +63,10 @@ const AppRouter = () => {
             path:'login',
             element:<Login/>
         },
-        {
-            path:'inbox/:userId',
-            element:<ChatInbox/>,
-            children:[
-                {
-                    path:'landing',
-                    element:<LandingChats/>
-                },
-                {
-                    path:'chat/:chatId',
-                    element:<Chat/>
-                }
-            ]
-        }
+        
     ])
   return <RouterProvider router={router}/>
+
 };
 
 export default AppRouter;

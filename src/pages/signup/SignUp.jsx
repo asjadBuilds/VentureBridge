@@ -11,6 +11,7 @@ import { CONFIG } from "../../../config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import vbAbstract from '../../assets/VB-abstract.svg'
+import axiosInstance from "../../../axiosInstance";
 const SignUp = () => {
   const FILE_SIZE_LIMIT = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
@@ -38,7 +39,7 @@ const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
     formData.append("role", roleValue);
 
     try {
-      const { data } = await axios.post(CONFIG.registerUser, formData);
+      const { data } = await axiosInstance.post(CONFIG.registerUser, formData);
       toast(data?.message);
       resetForm();
       navigate("/login");

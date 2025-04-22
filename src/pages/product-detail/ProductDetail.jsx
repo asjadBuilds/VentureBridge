@@ -18,6 +18,7 @@ import { CONFIG } from '../../../config';
 import { useUserDetails } from '../../contexts/UserDetailContext';
 import { useReceiverChat } from '../../contexts/ReceiverChatContext';
 import { toast } from 'react-toastify';
+import axiosInstance from '../../../axiosInstance';
 const ProductDetail = () => {
   const params = useParams();
   const [productId, setProductId] = useState('');
@@ -28,27 +29,37 @@ const ProductDetail = () => {
   const {details} = useUserDetails();
   const {setRecDetails} = useReceiverChat()
   useEffect(() => {
-    setProductId(params.id)
+    if (params.id) {
+      setProductId(params.id);
+    }
+  }, [params.id]);
+  useEffect(() => {
+    if (!productId) return;
     fetchProductDetails();
-    details?.savedProducts?.forEach((id)=> {
-      if(id === productId){
-        setProductSaved(true)
-      }
-    })
+    viewProductHandler();
+    if (details?.savedProducts?.includes(productId)) {
+      setProductSaved(true);
+    }
   }, [productId,conversation])
   const fetchProductDetails = async () => {
     try {
-      const { data } = await axios.post(CONFIG.getProductById, { productId });
+      const { data } = await axiosInstance.post(CONFIG.getProductById, { productId });
       setProductDetail(data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const viewProductHandler = async()=>{
+    try {
+      const {data} = await axiosInstance.post(CONFIG.viewProduct,{productId})
+
     } catch (error) {
       console.log(error)
     }
   }
   const onChatHandler = async()=>{
     try {
-      const {data} = await axios.post(CONFIG.getSingleConversation,{receiverId:productDetail?.user},{
-        withCredentials:true
-      })
+      const {data} = await axiosInstance.post(CONFIG.getSingleConversation,{receiverId:productDetail?.user})
       if(data.success){
         setConversation(data?.data);
         
@@ -62,7 +73,7 @@ const ProductDetail = () => {
   }
   const addToSaveHandler = async()=> {
     try {
-      const {data} = await axios.post(CONFIG.addToSaveProduct,{productId},{withCredentials:true})
+      const {data} = await axiosInstance.post(CONFIG.addToSaveProduct,{productId})
       if(data.success){
         toast.success(data.message)
         localStorage.setItem('userDetails', JSON.stringify(data.data));
@@ -74,7 +85,7 @@ const ProductDetail = () => {
   }
   const removeFromSaveProduct = async()=>{
     try {
-      const {data} = await axios.post(CONFIG.removeFromSaveProduct,{productId},{withCredentials:true})
+      const {data} = await axiosInstance.post(CONFIG.removeFromSaveProduct,{productId})
       if(data.success){
         toast.success(data.message)
         localStorage.setItem('userDetails', JSON.stringify(data.data));

@@ -4,13 +4,16 @@ import App from './App.jsx'
 import { LoginStatusProvider } from './contexts/LoginStatusContext.jsx'
 import { UserDetailsProvider } from './contexts/UserDetailContext.jsx'
 import { ReceiverChatProvider } from './contexts/ReceiverChatContext.jsx'
+import AxiosInterceptor from './interceptors/AxiosInterceptor.js'
 
 createRoot(document.getElementById('root')).render(
-    <LoginStatusProvider>
-        <UserDetailsProvider>
-            <ReceiverChatProvider>
-        <App />
-            </ReceiverChatProvider>
-        </UserDetailsProvider>
-    </LoginStatusProvider>
+
+        <LoginStatusProvider>
+            <UserDetailsProvider>
+                <ReceiverChatProvider>
+                    <App />
+                </ReceiverChatProvider>
+            </UserDetailsProvider>
+        </LoginStatusProvider>
+
 )

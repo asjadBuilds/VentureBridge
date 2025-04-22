@@ -13,10 +13,13 @@ import './home.css'
 import axios from "axios";
 import { CONFIG } from "../../../config";
 import { useNavigate } from "react-router-dom";
+import ProductCard from "../../components/product-card/ProductCard";
+import axiosInstance from "../../../axiosInstance";
 const Home = () => {
   const [value, setValue] = useState("");
   const options = useMemo(() => countryList().getData(), []);
   const [categories, setCategories] = useState([])
+  const [popularProducts, setPopularProducts] = useState([])
   const naviagte = useNavigate()
   const countries = options.flat();
   const changeHandler = (value) => {
@@ -24,13 +27,22 @@ const Home = () => {
   };
   useEffect(()=>{
     getAllCategories()
+    fetchPopularProducts()
   },[])
   const getAllCategories = async()=>{
     try {
-      const {data} = await axios.get(CONFIG.getAllCategories)
+      const {data} = await axiosInstance.get(CONFIG.getAllCategories)
       if(data.success){
         setCategories(data?.data)
       }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const fetchPopularProducts = async()=>{
+    try {
+      const {data} = await axiosInstance.post(CONFIG.getPopularProducts)
+      setPopularProducts(data?.data)
     } catch (error) {
       console.log(error)
     }
@@ -202,7 +214,7 @@ const Home = () => {
       </section>
       {/* popular ideas */}
       <section className="w-full py-16 px-2">
-        <div className="container flex flex-col gap-y-6 items-center text-center">
+        <div className=" flex flex-col gap-y-6 items-center text-center">
           <div className="flex flex-col">
             <h3 className="text-2xl mb-4 font-semibold">Popular Ideas</h3>
             <p className="text-slate-400 max-w-xl">
@@ -211,7 +223,7 @@ const Home = () => {
               companies worldwide.
             </p>
           </div>
-          <div className="flex justify-center md:justify-start max-md:flex-col md:flex-wrap gap-4 md:gap-6 w-full">
+          {/* <div className="flex justify-center md:justify-start max-md:flex-col md:flex-wrap gap-4 md:gap-6 w-full">
             <div className="flex flex-col md:w-[25vw] overflow-hidden rounded-md shadow gap-y-4">
               <div className="w-full h-[150px] overflow-hidden">
                 <img
@@ -317,6 +329,12 @@ const Home = () => {
                 </button>
               </div>
             </div>
+          </div> */}
+          <div className="flex md:flex-wrap max-md:flex-col w-full gap-3 items-center my-6 md:px-8 px-2 justify-start">
+            {popularProducts.map((product)=>(
+              
+              <ProductCard key={product._id} linkUrl={product._id} thumbnailSrc={product?.images[0]} title={product?.title} username={product?.user?.username} description={product?.description} minPrice={product?.pricing?.minPrice} avgPrice={product?.pricing?.avgPrice} maxPrice={product?.pricing?.maxPrice}/>
+            ))}
           </div>
         </div>
       </section>

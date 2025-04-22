@@ -6,6 +6,7 @@ import axios from 'axios'
 import { CONFIG } from '../../../config'
 import { useUserDetails } from '../../contexts/UserDetailContext'
 import { useReceiverChat } from '../../contexts/ReceiverChatContext'
+import axiosInstance from '../../../axiosInstance'
 const ChatInbox = () => {
     const [conversations, setConversations] = useState([]);
     const [activeConversation, setActiveConversation] = useState('')
@@ -17,7 +18,7 @@ const ChatInbox = () => {
     },[])
     const fetchUserConversations = async()=>{
         try {
-            const {data} = await axios.get(CONFIG.getUserConversations,{withCredentials:true});
+            const {data} = await axiosInstance.get(CONFIG.getUserConversations);
             if(data.success){
                 const formatted = data.data.map((conv) => ({
                     _id:conv._id,
@@ -40,9 +41,7 @@ const ChatInbox = () => {
     const openConversationHandler = async(conversationId, receiverId)=>{
         // setActiveConversation(conversationId)
         try {
-            const {data} = await axios.post(CONFIG.getSingleConversation,{receiverId},{
-              withCredentials:true
-            })
+            const {data} = await axiosInstance.post(CONFIG.getSingleConversation,{receiverId})
             if(data.success){
                 setRecDetails(data?.data?.receiverField)
             }
@@ -50,7 +49,7 @@ const ChatInbox = () => {
             console.log(error)
           }
         try {
-           const {data} = await axios.get(CONFIG.getMessagesByConversation+`/${conversationId}`,{withCredentials:true})
+           const {data} = await axiosInstance.get(CONFIG.getMessagesByConversation+`/${conversationId}`)
            if(data?.success){
             navigate(`/inbox/${details._id}/chat/${conversationId}`)
            }

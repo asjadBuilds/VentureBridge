@@ -13,6 +13,8 @@ import countryList from "react-select-country-list";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { CONFIG } from "../../../config";
+import ProductCard from "../../components/product-card/ProductCard";
+import axiosInstance from "../../../axiosInstance";
 const IdeasListing = () => {
   const [value, setValue] = useState("");
   const [products, setProducts] = useState([]);
@@ -29,7 +31,7 @@ const IdeasListing = () => {
   const fetchProductByCategory = async()=>{
     try {
       const categoryId = params?.categoryId
-      const {data} = await axios.post(CONFIG.getProductsByCategory,{categoryId})
+      const {data} = await axiosInstance.post(CONFIG.getProductsByCategory,{categoryId})
       setProducts(data?.data)
     } catch (error) {
       
@@ -100,59 +102,60 @@ const IdeasListing = () => {
       </div>
       <div className="flex md:flex-wrap max-md:flex-col w-full gap-3 items-center justify-start my-6 md:px-8 px-2">
         {products.map((product)=>(
-          <Link to={`/productDetail/${product._id}`} className="md:w-1/4 w-full">
-        <div key={product._id} className="flex flex-col   border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
-          <div className="relative h-40 overflow-hidden group">
-            <img
-              src={product?.images[0]}
-              alt="idea-thumbnail"
-              className="w-full h-full object-cover group-hover:blur-sm transition-all duration-500"
-            />
-            <div className="items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden group-hover:flex transition-all duration-300 gap-x-4">
-              <a className="text-emerald-600 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 text-4xl">
-              <CiHeart />
-              </a>
-              <a className="action-btn rounded-full hover:text-white text-emerald-600 ms-1 text-2xl hover:bg-emerald-600 transition-all duration-200 p-1">
-              <IoSaveOutline />
-              </a>
-              <a className="action-btn rounded-full hover:text-white  border-emerald-600/10 text-emerald-600 ms-1 text-3xl hover:bg-emerald-600 transition-all duration-200 p-1">
-              <MdArrowOutward />
-              </a>
-              </div>
-          </div>
-          <div className="flex flex-col gap-y-1 p-3">
-            <h3 className="text-xl font-semibold">{product?.title}</h3>
-            <span className="text-[14px] font-semibold underline decoration-emerald-600">{product?.user?.username}</span>
-            <p className="text-[#94a3b8] text-[15px]">
-              {product?.description?.substring(0,100)+"..."}
-            </p>
-            <div className="flex flex-wrap gap-2 items-center *:cursor-pointer">
-              {/* <a >
-              <span className="bg-orange-500/5 hover:bg-orange-500/20 inline-block text-orange-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
-                Full Time
-              </span>
-              </a> */}
+        //   <Link to={`/productDetail/${product._id}`} className="md:w-1/4 w-full">
+        // <div key={product._id} className="flex flex-col   border border-emerald-600/20 border-solid bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-150">
+        //   <div className="relative h-40 overflow-hidden group">
+        //     <img
+        //       src={product?.images[0]}
+        //       alt="idea-thumbnail"
+        //       className="w-full h-full object-cover group-hover:blur-sm transition-all duration-500"
+        //     />
+        //     <div className="items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden group-hover:flex transition-all duration-300 gap-x-4">
+        //       <a className="text-emerald-600 dark:text-slate-700 focus:text-red-600 dark:focus:text-red-600 hover:text-red-600 text-4xl">
+        //       <CiHeart />
+        //       </a>
+        //       <a className="action-btn rounded-full hover:text-white text-emerald-600 ms-1 text-2xl hover:bg-emerald-600 transition-all duration-200 p-1">
+        //       <IoSaveOutline />
+        //       </a>
+        //       <a className="action-btn rounded-full hover:text-white  border-emerald-600/10 text-emerald-600 ms-1 text-3xl hover:bg-emerald-600 transition-all duration-200 p-1">
+        //       <MdArrowOutward />
+        //       </a>
+        //       </div>
+        //   </div>
+        //   <div className="flex flex-col gap-y-1 p-3">
+        //     <h3 className="text-xl font-semibold">{product?.title}</h3>
+        //     <span className="text-[14px] font-semibold underline decoration-emerald-600">{product?.user?.username}</span>
+        //     <p className="text-[#94a3b8] text-[15px]">
+        //       {product?.description?.substring(0,100)+"..."}
+        //     </p>
+        //     <div className="flex flex-wrap gap-2 items-center *:cursor-pointer">
+        //       {/* <a >
+        //       <span className="bg-orange-500/5 hover:bg-orange-500/20 inline-block text-orange-500 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">
+        //         Full Time
+        //       </span>
+        //       </a> */}
               
-              <a>
-              <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"min: $"+product?.pricing?.minPrice}</span>
-              </a>
-              <a>
-              <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"avg: $"+product?.pricing?.avgPrice}</span>
-              </a>
-              <a>
-              <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"max: $"+product?.pricing?.maxPrice}</span>
-              </a>
-              {/* <a>
-              <span className="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
-              <div>
-              <CiLocationOn />
-              </div>
-               USA</span>
-              </a> */}
-            </div>
-          </div>
-        </div>
-          </Link>
+        //       <a>
+        //       <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"min: $"+product?.pricing?.minPrice}</span>
+        //       </a>
+        //       <a>
+        //       <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"avg: $"+product?.pricing?.avgPrice}</span>
+        //       </a>
+        //       <a>
+        //       <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"max: $"+product?.pricing?.maxPrice}</span>
+        //       </a>
+        //       {/* <a>
+        //       <span className="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
+        //       <div>
+        //       <CiLocationOn />
+        //       </div>
+        //        USA</span>
+        //       </a> */}
+        //     </div>
+        //   </div>
+        // </div>
+        //   </Link>
+        <ProductCard linkUrl={product._id} thumbnailSrc={product?.images[0]} title={product?.title} username={product?.user?.username} description={product?.description} minPrice={product?.pricing?.minPrice} avgPrice={product?.pricing?.avgPrice} maxPrice={product?.pricing?.maxPrice}/>
         ))}
       </div>
     </div>

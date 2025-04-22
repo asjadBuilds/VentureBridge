@@ -17,6 +17,7 @@ import { IoMdPhotos } from "react-icons/io";
 import axios from "axios";
 import { CONFIG } from "../../../config";
 import * as Yup from 'yup';
+import axiosInstance from "../../../axiosInstance";
 
 const AddProduct = () => {
     const IMAGE_SIZE_LIMIT = 2 * 1024 * 1024;
@@ -134,7 +135,7 @@ const DOCUMENT_SUPPORTED_FORMATS = [
   });
   const fetchCategories = async()=>{
     try {
-        const {data} = await axios.get(CONFIG.getAllCategories)
+        const {data} = await axiosInstance.get(CONFIG.getAllCategories)
         if(data.success){
           setCategories(data?.data)
         }
@@ -155,7 +156,7 @@ const DOCUMENT_SUPPORTED_FORMATS = [
     formObj.docs.forEach((item)=>formData.append('docs',item))
 
     try {
-        const {data} = await axios.post(CONFIG.addProduct,formData,{withCredentials:true})
+        const {data} = await axiosInstance.post(CONFIG.addProduct,formData)
     } catch (error) {
         console.log(error)
     }

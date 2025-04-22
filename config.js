@@ -1,10 +1,11 @@
-const BASE_URL = 'https://venturebridge-backend-production.up.railway.app'
+ export const BASE_URL = 'https://venturebridge-backend-production.up.railway.app'
 // const BASE_URL = 'http://localhost:5000'
 
 export const CONFIG = {
     registerUser: BASE_URL + '/api/auth/registerUser',
     loginUser: BASE_URL + '/api/auth/loginUser',
     logoutUser: BASE_URL + '/api/auth/logoutUser',
+    refreshToken: BASE_URL + '/api/auth/refreshToken',
     //product
     getAllCategories: BASE_URL + '/api/product/getAllCategories',
     getProductsByCategory: BASE_URL + '/api/product/getProductsByCategory',
@@ -13,6 +14,8 @@ export const CONFIG = {
     addToSaveProduct: BASE_URL + '/api/product/addToSaveProducts',
     removeFromSaveProduct : BASE_URL + '/api/product/removeFromSaveProducts',
     getSavedProducts: BASE_URL + '/api/product/getSavedProducts',
+    viewProduct: BASE_URL + '/api/product/viewProduct',
+    getPopularProducts: BASE_URL + '/api/product/getPopularProducts',
     //userInfo
     getUserInfo: BASE_URL+'/api/user/getUserInfo',
     updateUserInfo: BASE_URL + '/api/user/updateUserInfo',

@@ -9,6 +9,7 @@ import { CONFIG } from '../../../config';
 import socket from '../../../socket';
 import { useUserDetails } from '../../contexts/UserDetailContext';
 import { useReceiverChat } from '../../contexts/ReceiverChatContext';
+import axiosInstance from '../../../axiosInstance';
 const Chat = () => {
     const [input, setInput] = useState('')
    const {details} = useUserDetails()
@@ -29,7 +30,7 @@ const Chat = () => {
     }, [params.chatId, details])
     
     const fetchMessages = async()=>{
-        const {data} = await axios.get(CONFIG.getMessagesByConversation+`/${params?.chatId}`,{withCredentials:true})
+        const {data} = await axiosInstance.get(CONFIG.getMessagesByConversation+`/${params?.chatId}`)
         socket.emit('joinRoom', params.chatId);
         // const formatted = data?.data.map((msg) => ({
         //     position: msg?.sender?._id === details?._id ? 'right' : 'left',
@@ -41,11 +42,11 @@ const Chat = () => {
     }
     const sendMessageHandler = async () => {
         try {
-            const { data } = await axios.post(CONFIG.sendMessage, {
+            const { data } = await axiosInstance.post(CONFIG.sendMessage, {
                 sender: details._id,
                 conversationId: params.chatId,
                 content: input
-            }, { withCredentials: true })
+            })
             if(data.success){
                 setInput('')
             }
