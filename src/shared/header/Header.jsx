@@ -4,6 +4,7 @@ import "../header/header.css";
 import jobstackFav from "../../assets/jobstack-fav.png";
 import jobstackFullLogo from "../../assets/full-logo.png";
 import fullLogoWhite from "../../assets/full-logo-white.png";
+import vbAbstract from "../../assets/VB-abstract.svg";
 import useDeviceWidth from "../../hooks/useDeviceWidth";
 import { Avatar, Button, Menu, MenuItem, Text } from "@mantine/core";
 import Cookies from 'js-cookie'
@@ -13,6 +14,7 @@ import { useLoginStatus } from "../../contexts/LoginStatusContext";
 import { useUserDetails } from "../../contexts/UserDetailContext";
 import { toast } from "react-toastify";
 import axiosInstance from "../../../axiosInstance";
+
 const Header = () => {
   const [userDropdown, setUserDropdown] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState(false);
@@ -111,24 +113,24 @@ const Header = () => {
       >
         <div>
           <Link to={"/"}>
-            <img src={jobstackFav} alt="main-logo" className="md:hidden" />
+            <img src={vbAbstract} alt="main-logo" className="md:hidden w-8" />
             {isHomeRoute ? (
               <img
-                src={jobstackFullLogo}
+                src={vbAbstract}
                 alt="full-main-logo"
-                className="max-md:hidden"
+                className="max-md:hidden w-16"
               />
             ) : !isHomeRoute && !windowScroll ? (
               <img
-                src={fullLogoWhite}
+                src={vbAbstract}
                 alt="white-main-logo"
-                className="max-md:hidden"
+                className="max-md:hidden w-16"
               />
             ) : !isHomeRoute && windowScroll ? (
               <img
-                src={jobstackFullLogo}
+                src={vbAbstract}
                 alt="full-main-logo"
-                className="max-md:hidden"
+                className="max-md:hidden w-16"
               />
             ) : (
               <></>

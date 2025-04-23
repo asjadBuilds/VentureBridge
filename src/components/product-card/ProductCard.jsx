@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { CiHeart } from "react-icons/ci";
 import { IoSaveOutline } from "react-icons/io5";
 import { MdArrowOutward } from "react-icons/md";
@@ -38,15 +38,15 @@ const ProductCard = ({linkUrl,thumbnailSrc,title,username,description, minPrice,
               </span>
               </a> */}
               
-              <a>
+              <div>
               <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"min: $"+minPrice}</span>
-              </a>
-              <a>
+              </div>
+              <div>
               <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"avg: $"+avgPrice}</span>
-              </a>
-              <a>
+              </div>
+              <div>
               <span className="bg-purple-600/5 hover:bg-purple-600/20 inline-block text-purple-600 px-4 text-[14px] font-medium rounded-full mt-2 me-1 transition-all duration-500">{"max: $"+maxPrice}</span>
-              </a>
+              </div>
               {/* <a>
               <span className="bg-emerald-600/5 hover:bg-emerald-600/20 inline-flex items-center text-emerald-600 px-4 text-[14px] font-medium rounded-full mt-2 transition-all duration-500">
               <div>
