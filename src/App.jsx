@@ -11,6 +11,7 @@ import {  useLoginStatus } from "./contexts/LoginStatusContext";
 import { useUserDetails } from "./contexts/UserDetailContext";
 import { useEffect, useState } from "react";
 import AxiosInterceptor from "./interceptors/AxiosInterceptor";
+import { LoadingProvider } from "./contexts/LoadingContext";
 function App() {
  const [isLogin, setIsLogin] = useState(false);
  const {setLoginStatus} = useLoginStatus()
@@ -30,7 +31,9 @@ const userDetails = localStorage.getItem('userDetails');
   return (
     <AxiosInterceptor>
     <MantineProvider>
+      <LoadingProvider>
       <AppRouter/>
+      </LoadingProvider>
       <ToastContainer/>
     </MantineProvider>
     </AxiosInterceptor>

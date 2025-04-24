@@ -2,20 +2,22 @@ import React from "react";
 import './login.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from "axios";
 import { CONFIG } from "../../../config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie'
 import { useLoginStatus } from "../../contexts/LoginStatusContext";
 import { useUserDetails } from "../../contexts/UserDetailContext";
 import vbAbstract from '../../assets/VB-abstract.svg'
 import loginGraphics from '../../assets/login-graphics.jpg'
 import axiosInstance from "../../../axiosInstance";
+import { useLoading } from "../../contexts/LoadingContext";
+import { Loader } from "@mantine/core";
+import Loading from "../../components/loader/Loading";
 const Login = () => {
     const navigate = useNavigate()
     const {setLoginStatus} = useLoginStatus();
     const {setUserDetails} = useUserDetails();
+    const {loading, setLoadingState} = useLoading()
     let initialValues = {
          email: "",
         password: "",
@@ -29,6 +31,7 @@ const Login = () => {
             .required('*Password is required'),
         });
         const handlePostLogin = async(values, { resetForm, setSubmitting })=>{
+            setLoadingState(true)
             try {
                 const {data} = await axiosInstance.post(CONFIG.loginUser, values);
                 if(data?.success){
@@ -42,13 +45,17 @@ const Login = () => {
                   // Cookies.set('userDetails',JSON.stringify(data?.data?.user))
                   resetForm();
                   navigate("/");
+                  setLoadingState(false)
                 }
               } catch (error) {
                 toast(error?.response?.data?.error);
+                setLoadingState(false)
               } finally {
                 setSubmitting(false);
+                setLoadingState(false)
               }
         }
+        if(loading) return <Loading/>
   return (
     <div className="w-screen  flex max-md:flex-col-reverse max-md:gap-4  items-center justify-center">
       <div className=" flex flex-col items-center gap-4 md:px-[10%] md:w-[50vw] max-md:p-4">

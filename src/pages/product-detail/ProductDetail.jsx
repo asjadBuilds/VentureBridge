@@ -19,6 +19,8 @@ import { useUserDetails } from '../../contexts/UserDetailContext';
 import { useReceiverChat } from '../../contexts/ReceiverChatContext';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../../axiosInstance';
+import { useLoading } from '../../contexts/LoadingContext';
+import Loading from '../../components/loader/Loading';
 const ProductDetail = () => {
   const params = useParams();
   const [productId, setProductId] = useState('');
@@ -28,6 +30,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const {details} = useUserDetails();
   const {setRecDetails} = useReceiverChat()
+  const {loading, setLoadingState} = useLoading()
   useEffect(() => {
     if (params.id) {
       setProductId(params.id);
@@ -43,8 +46,12 @@ const ProductDetail = () => {
   }, [productId,conversation])
   const fetchProductDetails = async () => {
     try {
+      setLoadingState(true)
       const { data } = await axiosInstance.post(CONFIG.getProductById, { productId });
-      setProductDetail(data?.data)
+      if(data.success){
+        setProductDetail(data?.data)
+        setLoadingState(false)
+      }
     } catch (error) {
       console.log(error)
     }
@@ -59,6 +66,7 @@ const ProductDetail = () => {
   }
   const onChatHandler = async()=>{
     try {
+      setLoadingState(true)
       const {data} = await axiosInstance.post(CONFIG.getSingleConversation,{receiverId:productDetail?.user})
       if(data.success){
         setConversation(data?.data);
@@ -66,9 +74,11 @@ const ProductDetail = () => {
           setRecDetails(data?.data?.receiverField)
       
         navigate(`/inbox/${details._id}/chat/${data.data._id}`)
+        setLoadingState(false)
       }
     } catch (error) {
       console.log(error)
+      setLoadingState(false)
     }
   }
   const addToSaveHandler = async()=> {
@@ -96,6 +106,7 @@ const ProductDetail = () => {
     }
   }
   const relatedCardData = [1, 2, 3];
+  if(loading) return <Loading/>
   return (
     <div className='mb-10'>
       {/* hero section */}

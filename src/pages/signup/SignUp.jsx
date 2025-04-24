@@ -12,12 +12,15 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import vbAbstract from '../../assets/VB-abstract.svg'
 import axiosInstance from "../../../axiosInstance";
+import { useLoading } from "../../contexts/LoadingContext";
+import Loading from "../../components/loader/Loading";
 const SignUp = () => {
   const FILE_SIZE_LIMIT = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
   const [formIndex, setFormIndex] = useState(0);
   const [roleValue, setRoleValue] = useState('investor')
   const navigate = useNavigate()
+  const {loading,setLoadingState} = useLoading()
   let initialValues = {
     username: "",
      email: "",
@@ -39,14 +42,18 @@ const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
     formData.append("role", roleValue);
 
     try {
+      setLoadingState(true)
       const { data } = await axiosInstance.post(CONFIG.registerUser, formData);
       toast(data?.message);
       resetForm();
       navigate("/login");
+      setLoadingState(false)
     } catch (error) {
       toast(error?.response?.data?.error || "Signup failed");
+      setLoadingState(false)
     } finally {
       setSubmitting(false);
+      setLoadingState(false)
     }
   };
   const validationSchema = Yup.object({
@@ -67,6 +74,7 @@ const SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
       return value && SUPPORTED_FORMATS.includes(value.type);
     }),
   });
+  if(loading) return <Loading/>
   return (
     <div className="w-screen  flex max-md:flex-col-reverse max-md:gap-4 max-md:p-4 items-center justify-center">
       <div className=" flex flex-col items-center gap-4 w-full md:max-w-[480px] md:p-[60px]">

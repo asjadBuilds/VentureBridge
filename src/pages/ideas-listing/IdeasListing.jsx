@@ -15,6 +15,8 @@ import { Link, useParams } from "react-router-dom";
 import { CONFIG } from "../../../config";
 import ProductCard from "../../components/product-card/ProductCard";
 import axiosInstance from "../../../axiosInstance";
+import { useLoading } from "../../contexts/LoadingContext";
+import Loading from "../../components/loader/Loading";
 const IdeasListing = () => {
   const [value, setValue] = useState("");
   const [products, setProducts] = useState([]);
@@ -22,6 +24,7 @@ const IdeasListing = () => {
   const params = useParams()
   const options = useMemo(() => countryList().getData(), []);
   const countries = options.flat();
+  const {loading, setLoadingState} = useLoading()
   const changeHandler = (value) => {
     setValue(value);
   };
@@ -30,13 +33,19 @@ const IdeasListing = () => {
   },[])
   const fetchProductByCategory = async()=>{
     try {
+      setLoadingState(true)
       const categoryId = params?.categoryId
       const {data} = await axiosInstance.post(CONFIG.getProductsByCategory,{categoryId})
-      setProducts(data?.data)
+      if(data.success){
+        setProducts(data?.data)
+        setLoadingState(false)
+      }
     } catch (error) {
-      
+      console.log(error);
+      setLoadingState(false)
     }
   }
+  if(loading) return <Loading/>
   return (
     // front hero image
     <div>

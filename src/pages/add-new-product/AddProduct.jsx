@@ -18,11 +18,15 @@ import axios from "axios";
 import { CONFIG } from "../../../config";
 import * as Yup from 'yup';
 import axiosInstance from "../../../axiosInstance";
+import { useLoading } from "../../contexts/LoadingContext";
+import { toast } from "react-toastify";
+import Loading from "../../components/loader/Loading";
 
 const AddProduct = () => {
     const IMAGE_SIZE_LIMIT = 2 * 1024 * 1024;
     const IMAGE_SUPPORTED_FORMATS = ["image/jpeg", "image/png"];
     const DOCUMENT_SIZE_LIMIT = 2 * 1024 * 1024;
+    const {loading, setLoadingState} = useLoading()
 const DOCUMENT_SUPPORTED_FORMATS = [
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
@@ -156,9 +160,16 @@ const DOCUMENT_SUPPORTED_FORMATS = [
     formObj.docs.forEach((item)=>formData.append('docs',item))
 
     try {
+        setLoadingState(true)
         const {data} = await axiosInstance.post(CONFIG.addProduct,formData)
+        if(data.success){
+          toast.success(data.message);
+          form.reset();
+          setLoadingState(false);
+        }
     } catch (error) {
         console.log(error)
+        setLoadingState(false)
     }
   }
   const handleCategory = (value)=>{
@@ -172,6 +183,7 @@ const DOCUMENT_SUPPORTED_FORMATS = [
         form.setFieldValue('docs',files)
     }
   }
+  if(loading) return <Loading/>
   return (
     <div className="mb-10">
       <div className="relative w-full bg-front py-36 rounded-b-[20px] md:rounded-b-[80px] overflow-hidden">

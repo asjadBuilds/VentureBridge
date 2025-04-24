@@ -14,6 +14,9 @@ import * as Yup from 'yup';
 import noData from '../../assets/no-data.svg'
 import { CountrySelect, CitySelect, StateSelect } from "react-country-state-city";
 import { useUserDetails } from "../../contexts/UserDetailContext";
+import axiosInstance from "../../../axiosInstance";
+import { useLoading } from "../../contexts/LoadingContext";
+import Loading from "../../components/loader/Loading";
 const Profile = () => {
   const [userInfo, setUserInfo] = useState({});
   const [userProducts, setUserProducts] = useState([]);
@@ -32,6 +35,7 @@ const Profile = () => {
   const [city, setCity] = useState('')
   const params = useParams();
   const {details} = useUserDetails()
+  const {loading, setLoadingState} = useLoading();
   const addEduValidationSchema = Yup.object({
     instituteName: Yup.string()
       .required('*Institute Name is required'),
@@ -138,17 +142,18 @@ const Profile = () => {
   }, [role]);
   const fetchUserInfo = async () => {
     try {
-      const { data } = await axios.post(CONFIG.getUserInfo,{
-        withCredentials:true
-      });
+    setLoadingState(true)
+      const { data } = await axiosInstance.post(CONFIG.getUserInfo);
       setUserInfo(data.data);
+      setLoadingState(false)
     } catch (error) {
       console.log(error);
+      setLoadingState(false)
     }
   };
   const fetchUserProducts = async () => {
     try {
-      const { data } = await axios.post(CONFIG.getUserProducts,{withCredentials:true});
+      const { data } = await axiosInstance.post(CONFIG.getUserProducts);
       setUserProducts(data.data);
     } catch (error) {
       console.log(error)
@@ -156,7 +161,7 @@ const Profile = () => {
   }
   const fetchUserSavedProducts = async () => {
     try {
-      const { data } = await axios.post(CONFIG.getSavedProducts, { withCredentials: true });
+      const { data } = await axiosInstance.post(CONFIG.getSavedProducts);
       if(data.success){
         setUserSavedProducts(data.data?.savedProducts);
       }
@@ -172,9 +177,11 @@ const Profile = () => {
       formObj.grade = formObj.grade + " " + grade;
     }
     try {
-      const { data } = await axios.post(CONFIG.addUserEducation, { ...formObj, userId })
+    setLoadingState(true)
+      const { data } = await axiosInstance.post(CONFIG.addUserEducation, { ...formObj, userId })
       eduClose()
       fetchUserInfo()
+      setLoadingState(false)
     } catch (error) {
       console.log(error)
     }
@@ -182,9 +189,11 @@ const Profile = () => {
   const onAddExpSubmission = async (formObj) => {
     formObj.duration = formObj.duration + " " + duration;
     try {
-      const { data } = await axios.post(CONFIG.addUserExperience, { ...formObj, userId })
+      setLoadingState(true)
+      const { data } = await axiosInstance.post(CONFIG.addUserExperience, { ...formObj, userId })
       expClose()
       fetchUserInfo()
+      setLoadingState(false)
     } catch (error) {
       console.log(error)
     }
@@ -192,34 +201,39 @@ const Profile = () => {
   const onAddCertSubmission = async (formObj) => {
     formObj.duration = formObj.duration + " " + duration;
     try {
-      const { data } = await axios.post(CONFIG.addUserCertification, { ...formObj, userId })
+      setLoadingState(true)
+      const { data } = await axiosInstance.post(CONFIG.addUserCertification, { ...formObj, userId })
       certClose()
       fetchUserInfo()
+      setLoadingState(false)
     } catch (error) {
       console.log(error)
     }
   }
   const onAddLangSubmission = async (formObj) => {
     try {
-      const { data } = await axios.post(CONFIG.addUserLanguage, { ...formObj, userId })
+      setLoadingState(true)
+      const { data } = await axiosInstance.post(CONFIG.addUserLanguage, { ...formObj, userId })
       langClose();
       fetchUserInfo()
+      setLoadingState(false)
     } catch (error) {
       console.log(error)
     }
   }
   const updateBioDetails = async(formObj) => {
     try {
-      const {data} = await axios.post(CONFIG.updateUserInfo,{...formObj},{
-        withCredentials:true
-      })
+      setLoadingState(true)
+      const {data} = await axiosInstance.post(CONFIG.updateUserInfo,{...formObj})
       console.log(data)
       updateInfoClose();
       fetchUserInfo();
+      setLoadingState(false)
     } catch (error) {
       console.log(error)
     }
   }
+  if(loading) return <Loading/>
   return (
     <div className="mb-10">
       <div className="relative w-full bg-front py-36 rounded-b-[20px] md:rounded-b-[80px] overflow-hidden">
