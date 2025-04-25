@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../product-detail/productdetail.css'
+import { Carousel } from '@mantine/carousel';
 import { LuUserRoundCheck } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
 import { PiOfficeChair } from "react-icons/pi";
@@ -13,7 +14,6 @@ import { IoSaveOutline } from "react-icons/io5";
 import { MdArrowOutward } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { CONFIG } from '../../../config';
 import { useUserDetails } from '../../contexts/UserDetailContext';
 import { useReceiverChat } from '../../contexts/ReceiverChatContext';
@@ -276,7 +276,30 @@ const ProductDetail = () => {
             <button className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Apply Now</button>
           </div> */}
           <div className="flex flex-col">
+          <Carousel withIndicators height={200}>
+            {productDetail?.images?.map((item,index)=>(
+              <Carousel.Slide>
+                <img src={item} alt="" className='w-full'/>
+              </Carousel.Slide>
+            ))}
+      
+      
+    </Carousel>
             <p dangerouslySetInnerHTML={{ __html: productDetail?.description }}></p>
+            {productDetail?.files?.map((file,index)=>(
+              <a
+              key={index}
+              href={file}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'blue', textDecoration: 'underline' }}
+            >
+              <button className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>
+              Download File
+              </button>
+            </a>
+            ))}
+            
             
             <button onClick={onChatHandler} className='bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold px-4 py-2 mt-5 transition-all duration-150'>Apply Now</button>
             {productSaved ? 

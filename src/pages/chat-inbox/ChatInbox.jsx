@@ -7,15 +7,24 @@ import { CONFIG } from '../../../config'
 import { useUserDetails } from '../../contexts/UserDetailContext'
 import { useReceiverChat } from '../../contexts/ReceiverChatContext'
 import axiosInstance from '../../../axiosInstance'
+import useDeviceWidth from '../../hooks/useDeviceWidth'
 const ChatInbox = () => {
     const [conversations, setConversations] = useState([]);
-    const [activeConversation, setActiveConversation] = useState('')
+    const [activeConversation, setActiveConversation] = useState('');
+    const [isDesktop, setIsDesktop] = useState(true);
+    const [mobileChat, setMobileChat] = useState(false);
     const {details} = useUserDetails();
     const {setRecDetails} = useReceiverChat();
     const navigate = useNavigate();
+    const width = useDeviceWidth();
     useEffect(()=>{
+        if (width > 768) {
+            setIsDesktop(true);
+          } else {
+            setIsDesktop(false);
+          }
         fetchUserConversations()
-    },[])
+    },[width])
     const fetchUserConversations = async()=>{
         try {
             const {data} = await axiosInstance.get(CONFIG.getUserConversations);
@@ -52,6 +61,7 @@ const ChatInbox = () => {
            const {data} = await axiosInstance.get(CONFIG.getMessagesByConversation+`/${conversationId}`)
            if(data?.success){
             navigate(`/inbox/${details._id}/chat/${conversationId}`)
+            setMobileChat(true);
            }
         } catch (error) {
             console.log(error)
@@ -59,7 +69,7 @@ const ChatInbox = () => {
     }
     return (
         <div className='flex w-full h-screen'>
-            <div className='flex flex-col bg-slate-100'>
+            <div className={`flex flex-col bg-slate-100 ${!isDesktop && mobileChat ? 'hidden' : !isDesktop && !mobileChat ? 'w-full': ''}`}>
                 <div>
                     <Input placeholder='Search Chats' p={'lg'} />
                 </div>
@@ -71,7 +81,7 @@ const ChatInbox = () => {
                     }}
                     dataSource={conversations} />
             </div>
-            <div className='w-full'>
+            <div className={`w-full ${!isDesktop && !mobileChat ? 'hidden' : !isDesktop && mobileChat?'w-full':''}`} >
                 <Outlet/>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./profile.css";
-import { Avatar, Button, Modal, Select, Table, Input, TextInput, Textarea } from "@mantine/core";
+import { Avatar, Button, Modal, Select, Table, Input, TextInput, Textarea, ScrollArea } from "@mantine/core";
 import axios from "axios";
 import { CiHeart } from "react-icons/ci";
 import { IoSaveOutline } from "react-icons/io5";
@@ -248,10 +248,10 @@ const Profile = () => {
       <div className="flex max-md:flex-col items-start gap-4 w-full px-8 mt-8">
         <div className="flex flex-col w-full md:w-1/2">
           <Button onClick={updateInfoOpen} variant="filled" bg={'#059669'} w={180} mb={8} style={{ alignSelf: 'end' }}>Update Details</Button>
-          <div className="flex justify-between items-center">
+          <div className="flex max-md:flex-col justify-between items-center">
             <div className="flex items-center gap-2 mb-4">
               <Avatar
-                src={userInfo?.avatar}
+                src={userInfo?.avatar || details?.avatar}
                 bg={"#059669"}
                 color="white"
                 size={"xl"}
@@ -286,6 +286,7 @@ const Profile = () => {
                 <Button variant="filled" bg={'#059669'} onClick={eduOpen} size="xs">Add New Education</Button>
               </div>
             </div>
+            <ScrollArea>
             <Table striped highlightOnHover withTableBorder withColumnBorders mt={8}>
               <Table.Thead>
                 <Table.Tr>
@@ -307,6 +308,7 @@ const Profile = () => {
               </Table.Tbody>
               <Table.Caption>{!userInfo?.education ? "No Data Available" : ""}</Table.Caption>
             </Table>
+            </ScrollArea>
           </div>
           <div className="mb-2">
             <div className="flex justify-between items-center">
@@ -315,6 +317,7 @@ const Profile = () => {
                 <Button variant="filled" bg={'#059669'} size="xs" onClick={expOpen}>Add New Experience</Button>
               </div>
             </div>
+            <ScrollArea>
             <Table striped highlightOnHover withTableBorder withColumnBorders mt={8}>
               <Table.Thead>
                 <Table.Tr>
@@ -340,6 +343,7 @@ const Profile = () => {
               </Table.Tbody>
               <Table.Caption>{!userInfo?.experience ? "No Data Available" : ""}</Table.Caption>
             </Table>
+            </ScrollArea>
           </div>
           <div className="mb-2">
             <div className="flex justify-between items-center">
@@ -348,6 +352,7 @@ const Profile = () => {
                 <Button variant="filled" bg={'#059669'} size="xs" onClick={certOpen}>Add New Certification</Button>
               </div>
             </div>
+            <ScrollArea>
             <Table striped highlightOnHover withTableBorder withColumnBorders mt={8}>
               <Table.Thead>
                 <Table.Tr>
@@ -369,6 +374,7 @@ const Profile = () => {
               </Table.Tbody>
               <Table.Caption>{!userInfo?.certifications ? "No Data Available" : ""}</Table.Caption>
             </Table>
+            </ScrollArea>
           </div>
           <div className="mb-2">
             <div className="flex justify-between items-center">
@@ -377,6 +383,7 @@ const Profile = () => {
                 <Button variant="filled" bg={'#059669'} size="xs" onClick={langOpen}>Add New Language</Button>
               </div>
             </div>
+            <ScrollArea>
             <Table striped highlightOnHover withTableBorder withColumnBorders mt={8}>
               <Table.Thead>
                 <Table.Tr>
@@ -394,6 +401,7 @@ const Profile = () => {
               </Table.Tbody>
               <Table.Caption>{!userInfo?.language ? "No Data Available" : ""}</Table.Caption>
             </Table>
+            </ScrollArea>
           </div>
         </div>
         {role === 'entrepreneur' ? <div className="flex flex-wrap w-full md:w-1/2 justify-center gap-6">

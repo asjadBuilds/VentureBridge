@@ -27,7 +27,6 @@ const Header = () => {
   const [role, setRole] = useState('')
   const {status} = useLoginStatus();
   const {details, setUserDetails} = useUserDetails();
-  const userId = '67e33fba18bd67a451e8623a'
   const navigate = useNavigate()
   useEffect(() => {
     setRole(details?.role)
@@ -73,7 +72,7 @@ const Header = () => {
   };
   const updateUserRole = async(role)=>{
     try {
-      const {data} = await axiosInstance.post(CONFIG.updateUserRole,{role, userId});
+      const {data} = await axiosInstance.post(CONFIG.updateUserRole,{role});
       if(data.success){
         localStorage.setItem('userDetails',JSON.stringify(data?.data))
         setUserDetails(data?.data)

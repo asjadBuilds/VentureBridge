@@ -7,6 +7,7 @@ import '@mantine/dropzone/styles.css';
 import '@mantine/dates/styles.css';
 import "react-country-state-city/dist/react-country-state-city.css";
 import "react-chat-elements/dist/main.css"
+import '@mantine/carousel/styles.css';
 import {  useLoginStatus } from "./contexts/LoginStatusContext";
 import { useUserDetails } from "./contexts/UserDetailContext";
 import { useEffect, useState } from "react";
