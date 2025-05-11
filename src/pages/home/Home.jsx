@@ -142,7 +142,7 @@ const Home = () => {
             <p className="text-slate-400 max-w-xl">
               Search all the open positions on the web. Get your own
               personalized salary estimate. Read reviews on over 30000+
-              companies worldwide.
+              companies worldwide..
             </p>
           </div>
           <div className="flex justify-center max-md:flex-col md:flex-wrap gap-4 w-full md:*:w-[30vh]">
