@@ -1,4 +1,4 @@
- export const BASE_URL = 'https://venturebridge-backend-production.up.railway.app'
+ export const BASE_URL = 'https://venturebridge-backend-edbm.onrender.com'
 // const BASE_URL = 'http://localhost:5000'
 
 export const CONFIG = {
